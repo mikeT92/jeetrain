@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+	page02.xhtml
+	Second page in a row of two pages 
+ -->
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" >
+	<f:metadata>
+		<!--  <f:viewParam name="key" value="#{navigator.key}" />  -->
+		<f:event type="preRenderView" listener="#{navigator.onPreRenderView}" />
+	</f:metadata>
+	<ui:composition template="/resources/jeetrain/layouts/masterNoNavigation.xhtml">
+		<ui:define name="pageTitle">JEETrain: Navigation Page 2</ui:define>
+		<ui:define name="content">
+			<p:panel id="panel02" header="View Data">
+				<p>You entered: #{navigator.data.text}. </p>
+			</p:panel>		
+		</ui:define>
+	</ui:composition>
+</f:view>

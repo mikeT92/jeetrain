@@ -1,0 +1,8 @@
+# ignore all Eclipse config files
+.settings/
+.project
+.classpath
+bin/
+# ignore all Maven target folders
+target/
+
