@@ -7,14 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import edu.hm.cs.fwp.jeetrain.business.users.Role;
 import edu.hm.cs.fwp.jeetrain.business.users.Roles;
@@ -37,7 +36,16 @@ public class UserEditorBean implements Serializable {
 	@Inject
 	private Conversation conversation;
 
-	@Inject
+	/**
+	 * Service facade {@code UserRegistration} that handles the user
+	 * registration process.
+	 * <p>
+	 * Since CDI handles inheritance in interfaces very poorly, we cannot use
+	 * the technology-neutral @Inject annotation but have to fall back to the
+	 * technology-specific @EJB annotation
+	 * </p>
+	 */
+	@EJB // @Inject
 	private UserRegistration userRegistrationFacade;
 
 	/**
@@ -107,7 +115,8 @@ public class UserEditorBean implements Serializable {
 				this.user = new User();
 				this.user.getRoles().add(new Role(Roles.JEETRAIN_USER));
 			} else {
-				this.user = this.userRegistrationFacade.retrieveUserById(this.userId);
+				this.user = this.userRegistrationFacade
+						.retrieveUserById(this.userId);
 			}
 		}
 	}
@@ -116,15 +125,20 @@ public class UserEditorBean implements Serializable {
 		if (!this.userRegistrationFacade.isUserIdAvailable(this.user.getId())) {
 			FacesContext.getCurrentInstance().addMessage(
 					"userName",
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "User ID [" + user.getId()
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "User ID ["
+							+ user.getId()
 							+ "] is already used by another user.", null));
 			return null;
 		}
 		if (!this.user.getPassword().equals(this.user.getConfirmedPassword())) {
-			FacesContext.getCurrentInstance().addMessage(
-					"password",
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Password and confirmed password must match.", null));
+			FacesContext
+					.getCurrentInstance()
+					.addMessage(
+							"password",
+							new FacesMessage(
+									FacesMessage.SEVERITY_ERROR,
+									"Password and confirmed password must match.",
+									null));
 			return null;
 		}
 		if (this.user.getRoles().isEmpty()) {

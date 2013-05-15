@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -26,7 +27,8 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 /**
- * User entity representing a registered user of the {@code JEETrain} application.
+ * User entity representing a registered user of the {@code JEETrain}
+ * application.
  * 
  * @author Michael Theis
  */
@@ -101,7 +103,7 @@ public class User implements Serializable {
 	@Size(max = 16)
 	private String mobile;
 
-	@OneToMany(cascade = { CascadeType.ALL })
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "USER_ID")
 	@NotNull
 	@Size(min = 1)

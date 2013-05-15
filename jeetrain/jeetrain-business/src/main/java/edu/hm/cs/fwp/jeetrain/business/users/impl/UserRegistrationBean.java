@@ -17,6 +17,7 @@ import edu.hm.cs.fwp.framework.core.ejb.interceptor.MethodValidationInterceptor;
 import edu.hm.cs.fwp.framework.core.ejb.interceptor.TraceInterceptor;
 import edu.hm.cs.fwp.jeetrain.business.users.User;
 import edu.hm.cs.fwp.jeetrain.business.users.UserRegistration;
+import edu.hm.cs.fwp.jeetrain.business.users.UserRegistrationRemote;
 import edu.hm.cs.fwp.jeetrain.domain.users.PasswordEncoder;
 import edu.hm.cs.fwp.jeetrain.integration.users.UserRepository;
 
@@ -28,6 +29,7 @@ import edu.hm.cs.fwp.jeetrain.integration.users.UserRepository;
  * @since release 1.0 09.01.2011 16:21:50
  */
 @Stateless
+@Remote(UserRegistrationRemote.class)
 @Local(UserRegistration.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @Interceptors({ TraceInterceptor.class, MethodValidationInterceptor.class })
@@ -54,7 +56,8 @@ public class UserRegistrationBean implements UserRegistration {
 			throw new IllegalArgumentException(
 					"At least one role must be attached to the specified user!");
 		}
-		newUser.setPassword(this.passwordEncoderService.encode(newUser.getPassword()));
+		newUser.setPassword(this.passwordEncoderService.encode(newUser
+				.getPassword()));
 		return this.userRepository.addEntity(newUser);
 	}
 
@@ -88,8 +91,8 @@ public class UserRegistrationBean implements UserRegistration {
 	 */
 	@Override
 	public List<User> retrieveAllUsers(int startIndex, int pageSize) {
-		return this.userRepository.queryEntitiesWithPagination(User.QUERY_ALL, null, startIndex,
-				pageSize);
+		return this.userRepository.queryEntitiesWithPagination(User.QUERY_ALL,
+				null, startIndex, pageSize);
 	}
 
 	/**
