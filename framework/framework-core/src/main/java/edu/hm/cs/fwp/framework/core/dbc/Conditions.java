@@ -52,7 +52,7 @@ public final class Conditions {
 			"Violation of precondition: {0} (expected value=[{1}], actual value=[{2}]) !";
 
 	private static final String POST_EQUALS_MESSAGE =
-			"Die Nachbedingung trifft nicht zu: {0} (erwarteter Wert=[{1}], tatsächlicher Wert=[{2}]) !";
+			"Violation of postcondition: {0} (expected value=[{1}], actual value=[{2}]) !";
 
 	/**
 	 * Private default constructor to prevent instantiation.
