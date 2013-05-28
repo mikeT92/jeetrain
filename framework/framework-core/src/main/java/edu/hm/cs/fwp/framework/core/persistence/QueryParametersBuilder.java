@@ -45,7 +45,7 @@ public final class QueryParametersBuilder {
 	 * Adds the parameter with the given name and value to the parameter list.
 	 * @param name parameter name; must not be empty.
 	 * @param value parameter value; must not be {@code null}
-	 * @return this builder instance to enable concatenation of method calls.
+	 * @return this builder instance to enable contatenation of method calls.
 	 */
 	public QueryParametersBuilder withParameter(String name, Object value) {
 		this.parameters.add(new QueryParameter(name, value));

@@ -9,8 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import edu.hm.cs.fwp.framework.core.persistence.GenericRepository;
-import edu.hm.cs.fwp.framework.core.persistence.Page;
-import edu.hm.cs.fwp.framework.core.persistence.PageCriteria;
 import edu.hm.cs.fwp.framework.core.persistence.QueryParameter;
 
 /**
@@ -109,7 +107,18 @@ public abstract class AbstractGenericRepository<K, T> implements GenericReposito
 	 */
 	@Override
 	public T queryEntity(String queryName, List<QueryParameter> queryParameters) {
-		return createNamedQuery(queryName, queryParameters).getSingleResult();
+		T result = null;
+
+		EntityManager em = getEntityManager();
+		TypedQuery<T> query = em.createNamedQuery(queryName, getEntityType());
+		if (queryParameters != null && !queryParameters.isEmpty()) {
+			for (QueryParameter currentParam : queryParameters) {
+				query.setParameter(currentParam.getName(), currentParam.getValue());
+			}
+		}
+		result = query.getSingleResult();
+
+		return result;
 	}
 
 	/**
@@ -118,7 +127,14 @@ public abstract class AbstractGenericRepository<K, T> implements GenericReposito
 	 */
 	@Override
 	public List<T> queryEntities(String queryName, List<QueryParameter> queryParameters) {
-		return createNamedQuery(queryName, queryParameters).getResultList();
+		EntityManager em = getEntityManager();
+		TypedQuery<T> query = em.createNamedQuery(queryName, getEntityType());
+		if (queryParameters != null && !queryParameters.isEmpty()) {
+			for (QueryParameter currentParam : queryParameters) {
+				query.setParameter(currentParam.getName(), currentParam.getValue());
+			}
+		}
+		return query.getResultList();
 	}
 
 	/**
@@ -128,27 +144,16 @@ public abstract class AbstractGenericRepository<K, T> implements GenericReposito
 	@Override
 	public List<T> queryEntitiesWithPagination(String queryName,
 			List<QueryParameter> queryParameters, int firstPosition, int pageSize) {
-		TypedQuery<T> query = createNamedQuery(queryName, queryParameters);
+		EntityManager em = getEntityManager();
+		TypedQuery<T> query = em.createNamedQuery(queryName, getEntityType());
+		if (queryParameters != null && !queryParameters.isEmpty()) {
+			for (QueryParameter currentParam : queryParameters) {
+				query.setParameter(currentParam.getName(), currentParam.getValue());
+			}
+		}
 		query.setFirstResult(firstPosition);
 		query.setMaxResults(pageSize);
 		return query.getResultList();
-	}
-
-	/**
-	 * @see edu.hm.cs.fwp.framework.core.persistence.GenericRepository#queryEntitiesWithPagination(java.lang.String, java.lang.String, edu.hm.cs.fwp.framework.core.persistence.PageCriteria)
-	 */
-	@Override
-	public Page<T> queryEntitiesWithPagination(String queryName, String countQueryName,
-			PageCriteria pageCriteria) {
-		int totalNumberOfEntities = 0;
-		if (pageCriteria.getFirstPosition() == 0 && countQueryName != null) {
-			totalNumberOfEntities = countEntities(countQueryName, pageCriteria.getQueryParameters());
-		}
-		TypedQuery<T> query = createNamedQuery(queryName, pageCriteria.getQueryParameters());
-		query.setFirstResult(pageCriteria.getFirstPosition());
-		query.setMaxResults(pageCriteria.getPageSize());
-		List<T> entitiesOnPage = query.getResultList();
-		return new Page<T>(entitiesOnPage, pageCriteria.getFirstPosition(), totalNumberOfEntities);
 	}
 
 	/**
@@ -194,17 +199,4 @@ public abstract class AbstractGenericRepository<K, T> implements GenericReposito
 	 * </p>
 	 */
 	protected abstract Class<T> getEntityType();
-	
-	/**
-	 * Creates a named query and sets all specified parameters.
-	 */
-	private TypedQuery<T> createNamedQuery(String queryName, List<QueryParameter> queryParameters) {
-		TypedQuery<T> result = getEntityManager().createNamedQuery(queryName, getEntityType());
-		if (queryParameters != null && !queryParameters.isEmpty()) {
-			for (QueryParameter currentParam : queryParameters) {
-				result.setParameter(currentParam.getName(), currentParam.getValue());
-			}
-		}
-		return result;
-	}
 }

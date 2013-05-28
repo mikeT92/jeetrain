@@ -103,7 +103,8 @@ public interface GenericRepository<K, T> {
 	 *            {@code null}
 	 * @return single entity that matched the query or {@code null}
 	 */
-	public T queryEntity(@NotNull String queryName, List<QueryParameter> queryParameters);
+	public T queryEntity(@NotNull String queryName,
+			List<QueryParameter> queryParameters);
 
 	/**
 	 * Returns all entities that match the specified query using the specified
@@ -117,7 +118,8 @@ public interface GenericRepository<K, T> {
 	 * @return {@code List} of entities that matched the query; may be empty but
 	 *         never {@code null}
 	 */
-	public List<T> queryEntities(@NotNull String queryName, List<QueryParameter> queryParameters);
+	public List<T> queryEntities(@NotNull String queryName,
+			List<QueryParameter> queryParameters);
 
 	/**
 	 * Returns all entities that match the specified query using the specified
@@ -136,24 +138,8 @@ public interface GenericRepository<K, T> {
 	 *         empty but never {@code null}
 	 */
 	public List<T> queryEntitiesWithPagination(@NotNull String queryName,
-			List<QueryParameter> queryParameters, int firstPosition, int pageSize);
-
-	/**
-	 * Returns a page of entities that match the specified query using the
-	 * specified parameters and the specified page criteria.
-	 * 
-	 * @param queryName
-	 *            name of a {@code NamedQuery} that retrieves all entities on a
-	 *            page.
-	 * @param countQueryName
-	 *            optional name of a {@code NamedQuery} that counts all
-	 *            available entities.
-	 * @param pageCriteria
-	 *            criteria to be passed to the query to retrieve a page
-	 * @return {@code Page} of entities; may be empty but never {@code null}
-	 */
-	public Page<T> queryEntitiesWithPagination(@NotNull String queryName, String countQueryName,
-			@NotNull PageCriteria pageCriteria);
+			List<QueryParameter> queryParameters, int firstPosition,
+			int pageSize);
 
 	/**
 	 * Counts the number of entities that match the specified query using the
@@ -168,5 +154,5 @@ public interface GenericRepository<K, T> {
 	 * @return number of entities matching query
 	 */
 	public int countEntities(@NotNull String queryName,
-			@NotNull List<QueryParameter> queryParameters);
+			List<QueryParameter> queryParameters);
 }

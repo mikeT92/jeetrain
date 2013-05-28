@@ -5,9 +5,6 @@ package edu.hm.cs.fwp.framework.core.persistence;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlType;
 
 import edu.hm.cs.fwp.framework.core.dbc.Conditions;
 
@@ -18,8 +15,6 @@ import edu.hm.cs.fwp.framework.core.dbc.Conditions;
  * @version %PR% %PRT% %PO%
  * @since release 1.0 12.03.2012 13:22:18
  */
-@XmlType(name = "QueryParameter", namespace = "http://persistence.core.system.xframe.unicredit.eu")
-@XmlAccessorType(XmlAccessType.FIELD)
 public final class QueryParameter implements Serializable {
 
 	private static final long serialVersionUID = -2044905704670188349L;
@@ -93,7 +88,6 @@ public final class QueryParameter implements Serializable {
 	@Override
 	public String toString() {
 		return new StringBuilder()
-				.append("QueryParameter { ").append("name : \"").append(this.name)
-				.append("\", value : \"").append(this.value).append("\" }").toString();
+				.append("QueryParameter{").append("name=").append(this.name).append("}").toString();
 	}
 }
