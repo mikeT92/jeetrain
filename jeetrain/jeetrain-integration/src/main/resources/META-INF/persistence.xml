@@ -3,8 +3,10 @@
 	<persistence-unit name="defaultPersistenceUnit" transaction-type="JTA">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>jdbc/JEETRAIN-DATASOURCE</jta-data-source>
-		<class>edu.hm.cs.fwp.jeetrain.business.users.User</class>
-		<class>edu.hm.cs.fwp.jeetrain.business.users.Role</class>
+		<mapping-file>META-INF/orm.xml</mapping-file>
+		<class>edu.hm.cs.fwp.jeetrain.business.users.model.User</class>
+		<class>edu.hm.cs.fwp.jeetrain.business.users.model.Role</class>
+		<class>edu.hm.cs.fwp.jeetrain.business.tasks.model.Task</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="eclipselink.logging.level" value="INFO"/>

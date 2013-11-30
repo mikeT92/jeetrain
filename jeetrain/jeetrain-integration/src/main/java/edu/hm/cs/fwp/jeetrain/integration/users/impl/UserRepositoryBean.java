@@ -7,9 +7,9 @@ import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import edu.hm.cs.fwp.framework.core.ejb.interceptor.TraceInterceptor;
+import edu.hm.cs.fwp.framework.core.logging.ejb.TraceInterceptor;
 import edu.hm.cs.fwp.framework.core.persistence.impl.AbstractGenericRepository;
-import edu.hm.cs.fwp.jeetrain.business.users.User;
+import edu.hm.cs.fwp.jeetrain.business.users.model.User;
 import edu.hm.cs.fwp.jeetrain.integration.users.UserRepository;
 
 /**

@@ -15,7 +15,7 @@ public enum TaskLifeCycleState {
 	 */
 	UNDEFINED,
 	/**
-	 * Task is open but still the request is still working on it.
+	 * Task is open but the submitter is still working on it.
 	 * <p>
 	 * Next statuses:
 	 * </p>

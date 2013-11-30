@@ -21,6 +21,14 @@
 					<version>6</version>
 					<generateApplicationXml>true</generateApplicationXml>
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
+					<modules>
+						<webModule>
+							<groupId>edu.hm.cs.fwp</groupId>
+							<artifactId>jeetrain-presentation</artifactId>
+							<bundleFileName>jeetrain-presentation</bundleFileName>
+							<contextRoot>jeetrain</contextRoot>
+						</webModule>
+					</modules>
 					<security>
 						<security-role>
 							<role-name>JEETRAIN_USER</role-name>

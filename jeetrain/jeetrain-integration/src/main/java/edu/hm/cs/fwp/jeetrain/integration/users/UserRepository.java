@@ -3,7 +3,7 @@
 package edu.hm.cs.fwp.jeetrain.integration.users;
 
 import edu.hm.cs.fwp.framework.core.persistence.GenericRepository;
-import edu.hm.cs.fwp.jeetrain.business.users.User;
+import edu.hm.cs.fwp.jeetrain.business.users.model.User;
 
 /**
  * User repository that manages persistent {@link User} instances.

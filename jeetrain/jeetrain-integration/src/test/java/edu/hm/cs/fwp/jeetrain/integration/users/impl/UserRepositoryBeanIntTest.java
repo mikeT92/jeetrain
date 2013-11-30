@@ -17,12 +17,12 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import edu.hm.cs.fwp.framework.core.ejb.interceptor.TraceInterceptor;
+import edu.hm.cs.fwp.framework.core.logging.ejb.TraceInterceptor;
 import edu.hm.cs.fwp.framework.core.persistence.GenericRepository;
-import edu.hm.cs.fwp.jeetrain.business.users.Gender;
-import edu.hm.cs.fwp.jeetrain.business.users.Role;
-import edu.hm.cs.fwp.jeetrain.business.users.Roles;
-import edu.hm.cs.fwp.jeetrain.business.users.User;
+import edu.hm.cs.fwp.jeetrain.business.users.model.Gender;
+import edu.hm.cs.fwp.jeetrain.business.users.model.Role;
+import edu.hm.cs.fwp.jeetrain.business.users.model.Roles;
+import edu.hm.cs.fwp.jeetrain.business.users.model.User;
 import edu.hm.cs.fwp.jeetrain.integration.users.UserRepository;
 
 /**

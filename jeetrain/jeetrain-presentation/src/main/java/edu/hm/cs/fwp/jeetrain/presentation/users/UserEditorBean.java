@@ -15,10 +15,10 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import edu.hm.cs.fwp.jeetrain.business.users.Role;
-import edu.hm.cs.fwp.jeetrain.business.users.Roles;
-import edu.hm.cs.fwp.jeetrain.business.users.User;
-import edu.hm.cs.fwp.jeetrain.business.users.UserRegistration;
+import edu.hm.cs.fwp.jeetrain.business.users.facade.UserRegistration;
+import edu.hm.cs.fwp.jeetrain.business.users.model.Role;
+import edu.hm.cs.fwp.jeetrain.business.users.model.Roles;
+import edu.hm.cs.fwp.jeetrain.business.users.model.User;
 
 /**
  * Managed bean handling all user interactions related to user registration.
