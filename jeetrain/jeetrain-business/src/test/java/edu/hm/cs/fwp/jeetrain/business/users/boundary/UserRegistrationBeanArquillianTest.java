@@ -1,6 +1,6 @@
 /* UserRegistrationBeanRemoteTest.java 
  */
-package edu.hm.cs.fwp.jeetrain.business.users.service.impl;
+package edu.hm.cs.fwp.jeetrain.business.users.boundary;
 
 import static org.junit.Assert.*;
 
@@ -8,24 +8,21 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.ejb.EJB;
+import javax.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import edu.hm.cs.fwp.jeetrain.business.users.facade.UserRegistrationRemote;
-import edu.hm.cs.fwp.jeetrain.business.users.model.Gender;
-import edu.hm.cs.fwp.jeetrain.business.users.model.Role;
-import edu.hm.cs.fwp.jeetrain.business.users.model.Roles;
-import edu.hm.cs.fwp.jeetrain.business.users.model.User;
+import edu.hm.cs.fwp.jeetrain.business.users.entity.Gender;
+import edu.hm.cs.fwp.jeetrain.business.users.entity.Role;
+import edu.hm.cs.fwp.jeetrain.business.users.entity.Roles;
+import edu.hm.cs.fwp.jeetrain.business.users.entity.User;
 
 /**
  * @author theism
@@ -34,10 +31,10 @@ import edu.hm.cs.fwp.jeetrain.business.users.model.User;
 @RunWith(Arquillian.class)
 public class UserRegistrationBeanArquillianTest {
 
-	@EJB
-	private UserRegistrationRemote underTest;
+	@Inject
+	private UserRegistrationBean underTest;
 
-	private List<String> trashCan = new ArrayList<String>();
+	private List<Long> trashCan = new ArrayList<>();
 
 	@Deployment
 	public static JavaArchive createDeployment() {
@@ -96,9 +93,9 @@ public class UserRegistrationBeanArquillianTest {
 
 	@After
 	public void tearDown() throws Exception {
-		for (String userName : this.trashCan) {
+		for (long userId : this.trashCan) {
 			try {
-				this.underTest.unregisterUser(userName);
+				this.underTest.unregisterUser(userId);
 			} catch (Exception ex) {
 			}
 		}
@@ -106,7 +103,7 @@ public class UserRegistrationBeanArquillianTest {
 
 	private User createStandardUser() {
 		User result = new User();
-		result.setId(buildRandomUserId());
+		result.setUserName(buildRandomUserId());
 		result.setPassword("fwpss2013");
 		result.setConfirmedPassword(result.getConfirmedPassword());
 		result.setFirstName("Klaus");

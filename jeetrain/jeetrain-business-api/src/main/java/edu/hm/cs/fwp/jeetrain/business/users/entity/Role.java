@@ -1,6 +1,6 @@
 /* Role.java @(#)%PID%
  */
-package edu.hm.cs.fwp.jeetrain.business.users.model;
+package edu.hm.cs.fwp.jeetrain.business.users.entity;
 
 import java.io.Serializable;
 
@@ -26,8 +26,8 @@ public class Role implements Serializable {
 	private static final long serialVersionUID = 8985105701544649718L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="USERS_SEQUENCE")
-	@SequenceGenerator(name="USERS_SEQUENCE", sequenceName="USERS_SEQUENCE")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="RoleIdGenerator")
+	@SequenceGenerator(name="RoleIdGenerator", sequenceName="USERS_SEQUENCE")
 	@Column(name = "ROLE_ID")
 	private long roleId;
 	

@@ -1,6 +1,6 @@
 /* TaskPriority.java @(#)%PID%
  */
-package edu.hm.cs.fwp.jeetrain.business.tasks.model;
+package edu.hm.cs.fwp.jeetrain.business.tasks.entity;
 
 /**
  * Enumeration representing the priority of a {@link Task}.

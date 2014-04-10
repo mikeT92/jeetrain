@@ -1,16 +1,16 @@
-/* TaskManagerRemote.java 
+/* TaskManager.java 
  */
-package edu.hm.cs.fwp.jeetrain.business.tasks.facade;
+package edu.hm.cs.fwp.jeetrain.business.tasks.boundary;
 
 import java.util.List;
 
-import edu.hm.cs.fwp.jeetrain.business.tasks.model.Task;
+import edu.hm.cs.fwp.jeetrain.business.tasks.entity.Task;
 
 /**
  * @author theism
  *
  */
-public interface TaskManagerRemote {
+public interface TaskManager {
 	
 	public Task addTask(Task newTask);
 

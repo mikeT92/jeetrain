@@ -23,6 +23,12 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>edu.hm.cs.fwp</groupId>
+			<artifactId>jeetrain-business</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 			<scope>provided</scope>
@@ -39,6 +45,7 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -68,7 +75,7 @@
 								<artifactItem>
 									<groupId>javax</groupId>
 									<artifactId>javaee-endorsed-api</artifactId>
-									<version>6.0</version>
+									<version>7.0</version>
 									<type>jar</type>
 								</artifactItem>
 							</artifactItems>

@@ -3,7 +3,7 @@
 package edu.hm.cs.fwp.jeetrain.integration.tasks;
 
 import edu.hm.cs.fwp.framework.core.persistence.GenericRepository;
-import edu.hm.cs.fwp.jeetrain.business.tasks.model.Task;
+import edu.hm.cs.fwp.jeetrain.business.tasks.entity.Task;
 
 /**
  * {@code Repository} that manages {@code Task} entities.

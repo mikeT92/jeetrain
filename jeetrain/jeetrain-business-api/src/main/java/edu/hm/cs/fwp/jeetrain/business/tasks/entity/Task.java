@@ -1,6 +1,6 @@
 /* Task.java @(#)%PID%
  */
-package edu.hm.cs.fwp.jeetrain.business.tasks.model;
+package edu.hm.cs.fwp.jeetrain.business.tasks.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -39,9 +39,9 @@ public class Task implements Serializable, AuditableEntity {
 
 	private static final long serialVersionUID = 6549807945660625663L;
 
-	public static final String QUERY_ALL = "edu.hm.cs.fwp.jeetrain.business.tasks.model.Task.QUERY_ALL";
+	public static final String QUERY_ALL = "edu.hm.cs.fwp.jeetrain.business.tasks.entity.Task.QUERY_ALL";
 
-	public static final String COUNT_ALL = "edu.hm.cs.fwp.jeetrain.business.tasks.model.Task.COUNT_ALL";
+	public static final String COUNT_ALL = "edu.hm.cs.fwp.jeetrain.business.tasks.entity.Task.COUNT_ALL";
 
 	/**
 	 * Unique identifier of this task.

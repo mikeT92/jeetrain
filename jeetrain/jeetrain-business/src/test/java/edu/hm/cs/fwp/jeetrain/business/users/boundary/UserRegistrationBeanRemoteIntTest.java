@@ -1,6 +1,6 @@
 /* UserRegistrationBeanRemoteTest.java 
  */
-package edu.hm.cs.fwp.jeetrain.business.users.service.impl;
+package edu.hm.cs.fwp.jeetrain.business.users.boundary;
 
 import static org.junit.Assert.*;
 
@@ -17,11 +17,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.hm.cs.fwp.jeetrain.business.users.facade.UserRegistrationRemote;
-import edu.hm.cs.fwp.jeetrain.business.users.model.Gender;
-import edu.hm.cs.fwp.jeetrain.business.users.model.Role;
-import edu.hm.cs.fwp.jeetrain.business.users.model.Roles;
-import edu.hm.cs.fwp.jeetrain.business.users.model.User;
+import edu.hm.cs.fwp.jeetrain.business.users.boundary.UserRegistration;
+import edu.hm.cs.fwp.jeetrain.business.users.entity.Gender;
+import edu.hm.cs.fwp.jeetrain.business.users.entity.Role;
+import edu.hm.cs.fwp.jeetrain.business.users.entity.Roles;
+import edu.hm.cs.fwp.jeetrain.business.users.entity.User;
 
 /**
  * @author theism
@@ -29,9 +29,9 @@ import edu.hm.cs.fwp.jeetrain.business.users.model.User;
  */
 public class UserRegistrationBeanRemoteIntTest {
 
-	private UserRegistrationRemote underTest;
+	private UserRegistration underTest;
 
-	private List<String> trashCan = new ArrayList<String>();
+	private List<Long> trashCan = new ArrayList<>();
 
 	/**
 	 * Test method for
@@ -84,17 +84,17 @@ public class UserRegistrationBeanRemoteIntTest {
 			// .lookup("java:global/jeetrain-app/jeetrain-business-0.0.1-SNAPSHOT/UserRegistrationBean!edu.hm.cs.fwp.jeetrain.business.users.UserRegistrationRemote");
 			Object remoteObject = jndiContext
 					.lookup("java:global/jeetrain-app/jeetrain-business-0.0.1-SNAPSHOT/UserRegistrationBean!edu.hm.cs.fwp.jeetrain.business.users.UserRegistrationRemote");
-			this.underTest = (UserRegistrationRemote) PortableRemoteObject
-					.narrow(remoteObject, UserRegistrationRemote.class);
+			this.underTest = (UserRegistration) PortableRemoteObject
+					.narrow(remoteObject, UserRegistration.class);
 		}
 		this.trashCan.clear();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		for (String userName : this.trashCan) {
+		for (long userId : this.trashCan) {
 			try {
-				this.underTest.unregisterUser(userName);
+				this.underTest.unregisterUser(userId);
 			} catch (Exception ex) {
 			}
 		}
@@ -102,7 +102,7 @@ public class UserRegistrationBeanRemoteIntTest {
 
 	private User createStandardUser() {
 		User result = new User();
-		result.setId(buildRandomUserId());
+		result.setUserName(buildRandomUserName());
 		result.setPassword("fwpss2013");
 		result.setConfirmedPassword(result.getPassword());
 		result.setFirstName("Klaus");
@@ -117,7 +117,7 @@ public class UserRegistrationBeanRemoteIntTest {
 		return result;
 	}
 
-	private String buildRandomUserId() {
+	private String buildRandomUserName() {
 		StringBuilder result = new StringBuilder(16);
 		result.append("P");
 		result.append(System.nanoTime() % 1000000);

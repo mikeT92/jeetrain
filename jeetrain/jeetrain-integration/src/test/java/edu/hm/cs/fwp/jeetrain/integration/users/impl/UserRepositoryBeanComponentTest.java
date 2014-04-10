@@ -19,17 +19,18 @@ import org.junit.runner.RunWith;
 
 import edu.hm.cs.fwp.framework.core.logging.ejb.TraceInterceptor;
 import edu.hm.cs.fwp.framework.core.persistence.GenericRepository;
-import edu.hm.cs.fwp.jeetrain.business.users.model.Gender;
-import edu.hm.cs.fwp.jeetrain.business.users.model.Role;
-import edu.hm.cs.fwp.jeetrain.business.users.model.Roles;
-import edu.hm.cs.fwp.jeetrain.business.users.model.User;
+import edu.hm.cs.fwp.jeetrain.business.users.entity.Gender;
+import edu.hm.cs.fwp.jeetrain.business.users.entity.Role;
+import edu.hm.cs.fwp.jeetrain.business.users.entity.Roles;
+import edu.hm.cs.fwp.jeetrain.business.users.entity.User;
 import edu.hm.cs.fwp.jeetrain.integration.users.UserRepository;
+import edu.hm.cs.fwp.jeetrain.integration.users.UserRepositoryBean;
 
 /**
  * @author theism
  */
 @RunWith(Arquillian.class)
-public class UserRepositoryBeanIntTest {
+public class UserRepositoryBeanComponentTest {
 
 	@EJB
 	private UserRepository underTest;
@@ -43,9 +44,10 @@ public class UserRepositoryBeanIntTest {
 				.addClass(UserRepository.class)
 				.addClass(TraceInterceptor.class)
 				.addPackages(true, GenericRepository.class.getPackage())
-				.addPackage("edu.hm.cs.fwp.jeetrain.business.users")
+				.addPackage("edu.hm.cs.fwp.jeetrain.business.users.entity")
 				.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
-				.addAsManifestResource("META-INF/persistence.xml", "persistence.xml");
+				.addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+				.addAsManifestResource("META-INF/orm.xml", "orm.xml");
 	}
 
 	/**
@@ -106,7 +108,7 @@ public class UserRepositoryBeanIntTest {
 
 	private User createStandardUser() {
 		User result = new User();
-		result.setId(buildRandomUserId());
+		result.setUserName(buildRandomUserName());
 		result.setPassword("fwpss2013");
 		result.setConfirmedPassword(result.getPassword());
 		result.setFirstName("Klaus");
@@ -121,7 +123,7 @@ public class UserRepositoryBeanIntTest {
 		return result;
 	}
 
-	private String buildRandomUserId() {
+	private String buildRandomUserName() {
 		StringBuilder result = new StringBuilder(16);
 		result.append("P");
 		result.append(System.nanoTime() % 1000000);

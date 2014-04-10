@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://jboss.org/schema/arquillian"
 	xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
-	<container qualifier="glassfish-embedded" default="true">
+	<container qualifier="glassfish-embedded">
 		<configuration>
 			<property name="bindHttpPort">12240</property>
 			<property name="instanceRoot">C:/fwpss2013/Projects/JEETrain/workspace/Servers/Glassfish/GF31_JEETRAIN_EMBEDDED</property>
@@ -9,14 +9,13 @@
 			<property name="configurationReadOnly">true</property>
 		</configuration>
 	</container>
-	<container qualifier="glassfish-remote">
+	<container qualifier="glassfish-remote" default="true">
 		<configuration>
 			<property name="adminUser">admin</property>
-			<property name="adminPassword"></property>
+			<property name="adminPassword">glassfish</property>
 			<property name="adminHttps">false</property>
 			<property name="adminHost">localhost</property>
-			<property name="adminPort">10128</property>
-			<property name="serverHttps">false</property>
+			<property name="adminPort">11128</property>
 			<property name="target">server</property>
 		</configuration>
 	</container>

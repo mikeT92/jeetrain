@@ -1,13 +1,12 @@
 /* PasswordEncoderBean.java @(#)%PID%
  */
-package edu.hm.cs.fwp.jeetrain.business.users.service.impl;
+package edu.hm.cs.fwp.jeetrain.business.users.control;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import javax.enterprise.context.Dependent;
 import javax.inject.Named;
-
-import edu.hm.cs.fwp.jeetrain.business.users.service.PasswordEncoder;
 
 /**
  * Service that encodes passwords before they are written to the user
@@ -18,15 +17,15 @@ import edu.hm.cs.fwp.jeetrain.business.users.service.PasswordEncoder;
  * @since release 1.0 09.01.2011 22:53:48
  */
 @Named
-public class PasswordEncoderBean implements PasswordEncoder {
+@Dependent
+public class PasswordEncoderBean {
 
 	private static final char[] HEXADECIMAL = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 			'a', 'b', 'c', 'd', 'e', 'f' };
 
 	/**
-	 * @see eu.unicredit.utrain.domain.users.PasswordEncoder#encode(java.lang.String)
+	 * Return the specified password after encoding.
 	 */
-	@Override
 	public String encode(String password) {
 
 		MessageDigest md = null;

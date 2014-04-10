@@ -1,6 +1,6 @@
 /* TaskCategory.java @(#)%PID%
  */
-package edu.hm.cs.fwp.jeetrain.business.tasks.model;
+package edu.hm.cs.fwp.jeetrain.business.tasks.entity;
 
 /**
  * Enumeration representing the various categories of a {@link Task}.

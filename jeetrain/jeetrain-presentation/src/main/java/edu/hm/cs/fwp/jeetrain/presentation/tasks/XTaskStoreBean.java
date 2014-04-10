@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-import edu.hm.cs.fwp.jeetrain.business.tasks.model.Task;
+import edu.hm.cs.fwp.jeetrain.business.tasks.entity.Task;
 
 import java.io.Serializable;
 

@@ -6,7 +6,6 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -21,11 +20,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.sun.appserv.security.ProgrammaticLogin;
-
 import edu.hm.cs.fwp.framework.core.logging.ejb.TraceInterceptor;
 import edu.hm.cs.fwp.framework.core.persistence.GenericRepository;
-import edu.hm.cs.fwp.jeetrain.business.tasks.model.Task;
+import edu.hm.cs.fwp.jeetrain.business.tasks.entity.Task;
 import edu.hm.cs.fwp.jeetrain.integration.tasks.TaskRepository;
 
 /**
@@ -40,7 +37,7 @@ public class TaskRepositoryBeanComponentTest {
 
 	private List<Task> trashBin = new ArrayList<Task>();
 
-	private ProgrammaticLogin loginHelper = new ProgrammaticLogin();
+	// FIXME: private ProgrammaticLogin loginHelper = new ProgrammaticLogin();
 
 	@Deployment
 	public static JavaArchive createDeployment() {
@@ -50,7 +47,7 @@ public class TaskRepositoryBeanComponentTest {
 				.addClass(TaskRepository.class)
 				.addClass(TraceInterceptor.class)
 				.addPackages(true, GenericRepository.class.getPackage())
-				.addPackage("edu.hm.cs.fwp.jeetrain.business.tasks.model")
+				.addPackage("edu.hm.cs.fwp.jeetrain.business.tasks.entity")
 				.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
 				.addAsManifestResource("persistence-test.xml",
 						"persistence.xml")
@@ -95,8 +92,7 @@ public class TaskRepositoryBeanComponentTest {
 
 	@Before
 	public void onBefore() throws Exception {
-		this.loginHelper.login("mtheis", "fwpss2013".toCharArray(),
-				"JEETRAIN-REALM", true);
+		// FIXME: this.loginHelper.login("mtheis", "fwpss2013".toCharArray(),"JEETRAIN-REALM", true);
 	}
 
 	@After

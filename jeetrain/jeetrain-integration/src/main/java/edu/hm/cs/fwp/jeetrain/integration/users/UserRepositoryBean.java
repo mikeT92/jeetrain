@@ -1,21 +1,22 @@
 /* UserRepositoryBean.java @(#)%PID%
  */
-package edu.hm.cs.fwp.jeetrain.integration.users.impl;
+package edu.hm.cs.fwp.jeetrain.integration.users;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import edu.hm.cs.fwp.framework.core.logging.ejb.TraceInterceptor;
 import edu.hm.cs.fwp.framework.core.persistence.impl.AbstractGenericRepository;
-import edu.hm.cs.fwp.jeetrain.business.users.model.User;
-import edu.hm.cs.fwp.jeetrain.integration.users.UserRepository;
+import edu.hm.cs.fwp.jeetrain.business.users.entity.User;
 
 /**
  * Stateless session bean based implementation of repository
  * {@code UserRepository}. All persistence logic is implemented by the generic
- * abstract base class {@code AbstractGenericRepository}.
+ * abstract base class {@code GenericRepositoryBean}.
  * 
  * @author Mike
  * @version %PR% %PRT% %PO%
@@ -23,7 +24,7 @@ import edu.hm.cs.fwp.jeetrain.integration.users.UserRepository;
  */
 @Stateless
 @Interceptors({ TraceInterceptor.class })
-public class UserRepositoryBean extends AbstractGenericRepository<String, User>
+public class UserRepositoryBean extends AbstractGenericRepository<Long, User>
 		implements UserRepository {
 
 	@PersistenceContext

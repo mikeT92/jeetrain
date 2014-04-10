@@ -1,6 +1,6 @@
 /* Gender.java @(#)%PID%
  */
-package edu.hm.cs.fwp.jeetrain.business.users.model;
+package edu.hm.cs.fwp.jeetrain.business.users.entity;
 
 /**
  * Enumeration representing a users gender.

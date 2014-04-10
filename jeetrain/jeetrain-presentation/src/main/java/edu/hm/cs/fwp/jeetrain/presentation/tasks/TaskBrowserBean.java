@@ -7,15 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.model.SortOrder;
 
 import edu.hm.cs.fwp.framework.web.context.ViewScoped;
 import edu.hm.cs.fwp.framework.web.faces.component.datatable.SelectableLazyDataTableModel;
-import edu.hm.cs.fwp.jeetrain.business.tasks.facade.TaskManager;
-import edu.hm.cs.fwp.jeetrain.business.tasks.model.Task;
+import edu.hm.cs.fwp.jeetrain.business.tasks.boundary.TaskManagerBean;
+import edu.hm.cs.fwp.jeetrain.business.tasks.entity.Task;
 
 /**
  * {@code ManagedBean} that manages the browseTasks view.
@@ -29,15 +29,15 @@ import edu.hm.cs.fwp.jeetrain.business.tasks.model.Task;
 @ViewScoped
 public class TaskBrowserBean implements Serializable {
 
-	@EJB
-	private TaskManager taskStore;
+	@Inject
+	private TaskManagerBean taskStore;
 
 	private static final class TaskDataTableModel extends
 			SelectableLazyDataTableModel<Task> {
 
-		private final TaskManager taskStore;
+		private final TaskManagerBean taskStore;
 
-		public TaskDataTableModel(TaskManager taskStore) {
+		public TaskDataTableModel(TaskManagerBean taskStore) {
 			this.taskStore = taskStore;
 		}
 

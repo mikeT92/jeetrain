@@ -1,6 +1,6 @@
 /* User.java @(#)%PID%
  */
-package edu.hm.cs.fwp.jeetrain.business.users.model;
+package edu.hm.cs.fwp.jeetrain.business.users.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,11 +13,14 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,7 +40,8 @@ import javax.validation.constraints.Size;
 @NamedQueries({
 		@NamedQuery(name = User.QUERY_ALL, query = "SELECT u FROM User u ORDER BY u.fullName"),
 		@NamedQuery(name = User.COUNT_ALL, query = "SELECT COUNT(u) FROM User u"),
-		@NamedQuery(name = User.QUERY_BY_ID, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.id = :userId") })
+		@NamedQuery(name = User.QUERY_BY_ID, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.id = :userId"),
+		@NamedQuery(name = User.QUERY_BY_NAME, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.userName = :userName") })
 public class User implements Serializable {
 
 	public static final String QUERY_ALL = "edu.hm.cs.fwp.jeetrain.business.users.QUERY_ALL";
@@ -46,13 +50,20 @@ public class User implements Serializable {
 
 	public static final String QUERY_BY_ID = "edu.hm.cs.fwp.jeetrain.business.users.QUERY_BY_ID";
 
+	public static final String QUERY_BY_NAME = "edu.hm.cs.fwp.jeetrain.business.users.QUERY_BY_NAME";
+
 	private static final long serialVersionUID = -4518047765217559890L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="UserIdGenerator")
+	@SequenceGenerator(name="UserIdGenerator", sequenceName="USERS_SEQUENCE")
 	@Column(name = "USER_ID")
+	private long id;
+	
+	@Column(name = "USER_NAME")
 	@NotNull
 	@Size(min = 5, max = 16)
-	private String id;
+	private String userName;
 
 	@Column(name = "PASSWORD")
 	@NotNull
@@ -109,13 +120,20 @@ public class User implements Serializable {
 	@Size(min = 1)
 	private Set<Role> roles = new HashSet<Role>();
 
-	public String getId() {
+	public long getId() {
 		return this.id;
 	}
 
-	public void setId(String userId) {
-		this.id = userId;
+	
+	public String getUserName() {
+		return userName;
 	}
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 
 	public String getPassword() {
 		return password;
@@ -201,20 +219,18 @@ public class User implements Serializable {
 		this.mobile = mobile;
 	}
 
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result
+				+ ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -224,19 +240,27 @@ public class User implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (id != other.id)
+			return false;
+		if (userName == null) {
+			if (other.userName != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!userName.equals(other.userName))
 			return false;
 		return true;
 	}
+
 
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return this.id;
+		StringBuilder result = new StringBuilder();
+		result.append(getClass().getSimpleName()).append(" {");
+		result.append(" id:").append(getId());
+		result.append(", userName:\"").append(getUserName()).append("\"");
+		result.append(" }");
+		return result.toString();
 	}
 }

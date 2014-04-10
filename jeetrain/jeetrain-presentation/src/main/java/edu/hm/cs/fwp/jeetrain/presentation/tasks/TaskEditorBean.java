@@ -5,16 +5,15 @@ package edu.hm.cs.fwp.jeetrain.presentation.tasks;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import edu.hm.cs.fwp.jeetrain.business.tasks.facade.TaskManager;
-import edu.hm.cs.fwp.jeetrain.business.tasks.model.Task;
-import edu.hm.cs.fwp.jeetrain.business.tasks.model.TaskCategory;
-import edu.hm.cs.fwp.jeetrain.business.tasks.model.TaskPriority;
+import edu.hm.cs.fwp.jeetrain.business.tasks.boundary.TaskManagerBean;
+import edu.hm.cs.fwp.jeetrain.business.tasks.entity.Task;
+import edu.hm.cs.fwp.jeetrain.business.tasks.entity.TaskCategory;
+import edu.hm.cs.fwp.jeetrain.business.tasks.entity.TaskPriority;
 
 /**
  * {@code ManagedBean} that manages the browseTasks view.
@@ -31,8 +30,8 @@ public class TaskEditorBean implements Serializable {
 	@Inject
 	private Conversation conversation;
 
-	@EJB
-	private TaskManager facade;
+	@Inject
+	private TaskManagerBean facade;
 
 	private boolean owningConversation;
 

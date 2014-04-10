@@ -1,20 +1,22 @@
-/* UserRegistrationRemote.java 
+/* UserRegistration.java @(#)%PID%
  */
-package edu.hm.cs.fwp.jeetrain.business.users.facade;
+package edu.hm.cs.fwp.jeetrain.business.users.boundary;
 
 import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import edu.hm.cs.fwp.jeetrain.business.users.model.User;
+import edu.hm.cs.fwp.jeetrain.business.users.entity.User;
 
 /**
- * Remote view of service facade {@code UserRegistration}
+ * Local view on service facade {@code UserRegistration}.
  * 
- * @author theism
+ * @author Mike
+ * @version %PR% %PRT% %PO%
+ * @since release 1.0 09.01.2011 16:23:58
  */
-public interface UserRegistrationRemote {
+public interface UserRegistration {
 
 	/**
 	 * Registers the specified user as a new user of the UTRAIN application.
@@ -35,18 +37,18 @@ public interface UserRegistrationRemote {
 	 * @throws IllegalStateException
 	 *             , if there is no user with the specified user ID.
 	 */
-	public User retrieveUserById(@NotNull String userId);
+	public User retrieveUserById(long userId);
 
 	/**
-	 * Returns <code>true</code>, if the specified user ID is available;
+	 * Returns <code>true</code>, if the specified username is available;
 	 * otherwise <code>false</code>.
 	 */
-	public boolean isUserIdAvailable(@NotNull String userId);
+	public boolean isUserNameAvailable(@NotNull String userName);
 
 	/**
 	 * Unregisters the user identified by the given user ID.
 	 */
-	public void unregisterUser(@NotNull String userId);
+	public void unregisterUser(long userId);
 
 	/**
 	 * Returns all registered users.
@@ -68,5 +70,4 @@ public interface UserRegistrationRemote {
 	 *         users can be found, never <code>null</code>.
 	 */
 	public List<User> retrieveAllUsers(int startIndex, int pageSize);
-
 }

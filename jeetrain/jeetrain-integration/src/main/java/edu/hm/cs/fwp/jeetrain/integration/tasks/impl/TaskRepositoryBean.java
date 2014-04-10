@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
 
 import edu.hm.cs.fwp.framework.core.logging.ejb.TraceInterceptor;
 import edu.hm.cs.fwp.framework.core.persistence.impl.AbstractGenericAuditableAwareRepository;
-import edu.hm.cs.fwp.jeetrain.business.tasks.model.Task;
+import edu.hm.cs.fwp.jeetrain.business.tasks.entity.Task;
 import edu.hm.cs.fwp.jeetrain.integration.tasks.TaskRepository;
 
 /**

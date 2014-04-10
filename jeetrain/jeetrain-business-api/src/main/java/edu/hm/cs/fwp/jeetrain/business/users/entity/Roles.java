@@ -1,6 +1,6 @@
 /* Roles.java @(#)%PID%
  */
-package edu.hm.cs.fwp.jeetrain.business.users.model;
+package edu.hm.cs.fwp.jeetrain.business.users.entity;
 
 /**
  * Supported roles that can be assigned to users.
