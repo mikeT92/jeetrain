@@ -5,6 +5,8 @@ package edu.hm.cs.fwp.framework.core.persistence.impl;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
@@ -34,6 +36,7 @@ public abstract class AbstractGenericRepository<K, T> implements GenericReposito
 	/**
 	 * @see eu.unicredit.xframe.system.core.persistence.GenericRepository#addEntity(java.lang.Object)
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
 	public T addEntity(T entity) {
 		EntityManager em = getEntityManager();
@@ -46,6 +49,7 @@ public abstract class AbstractGenericRepository<K, T> implements GenericReposito
 	/**
 	 * @see eu.unicredit.xframe.system.core.persistence.GenericRepository#getEntityById(java.lang.Object)
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
 	public T getEntityById(K uniqueId) {
 		T result = null;
@@ -57,6 +61,7 @@ public abstract class AbstractGenericRepository<K, T> implements GenericReposito
 	/**
 	 * @see eu.unicredit.xframe.system.core.persistence.GenericRepository#getRequiredEntityById(java.lang.Object)
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
 	public T getRequiredEntityById(K uniqueId) {
 		T result = null;
@@ -71,6 +76,7 @@ public abstract class AbstractGenericRepository<K, T> implements GenericReposito
 	/**
 	 * @see eu.unicredit.xframe.system.core.persistence.GenericRepository#setEntity(java.lang.Object)
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
 	public T setEntity(T entity) {
 		T result = null;
@@ -82,6 +88,7 @@ public abstract class AbstractGenericRepository<K, T> implements GenericReposito
 	/**
 	 * @see eu.unicredit.xframe.system.core.persistence.GenericRepository#removeEntity(java.lang.Object)
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
 	public void removeEntity(T entity) {
 		EntityManager em = getEntityManager();
@@ -92,6 +99,7 @@ public abstract class AbstractGenericRepository<K, T> implements GenericReposito
 	/**
 	 * @see eu.unicredit.xframe.system.core.persistence.GenericRepository#removeEntityById(java.lang.Object)
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
 	public void removeEntityById(K uniqueId) {
 		EntityManager em = getEntityManager();
@@ -105,6 +113,7 @@ public abstract class AbstractGenericRepository<K, T> implements GenericReposito
 	 * @see eu.unicredit.xframe.system.core.persistence.GenericRepository#queryEntity(java.lang.String,
 	 *      java.util.List)
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
 	public T queryEntity(String queryName, List<QueryParameter> queryParameters) {
 		T result = null;
@@ -125,6 +134,7 @@ public abstract class AbstractGenericRepository<K, T> implements GenericReposito
 	 * @see eu.unicredit.xframe.system.core.persistence.GenericRepository#queryEntities(java.lang.String,
 	 *      java.util.List)
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
 	public List<T> queryEntities(String queryName, List<QueryParameter> queryParameters) {
 		EntityManager em = getEntityManager();
@@ -141,6 +151,7 @@ public abstract class AbstractGenericRepository<K, T> implements GenericReposito
 	 * @see eu.unicredit.xframe.system.core.persistence.GenericRepository#queryEntitiesWithPagination(java.lang.String,
 	 *      java.util.List, int, int)
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
 	public List<T> queryEntitiesWithPagination(String queryName,
 			List<QueryParameter> queryParameters, int firstPosition, int pageSize) {
@@ -160,6 +171,7 @@ public abstract class AbstractGenericRepository<K, T> implements GenericReposito
 	 * @see eu.unicredit.xframe.system.core.persistence.GenericRepository#countEntities(java.lang.String,
 	 *      java.util.Map)
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	@Override
 	public int countEntities(String queryName, List<QueryParameter> queryParameters) {
 		int result = -1;

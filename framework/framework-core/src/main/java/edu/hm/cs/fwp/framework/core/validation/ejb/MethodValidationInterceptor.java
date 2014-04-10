@@ -2,16 +2,10 @@
  */
 package edu.hm.cs.fwp.framework.core.validation.ejb;
 
-import java.util.Set;
-
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
-
-import org.hibernate.validator.method.MethodConstraintViolation;
-import org.hibernate.validator.method.MethodConstraintViolationException;
-import org.hibernate.validator.method.MethodValidator;
 
 /**
  * EJB 3.0 interceptor that can validate constraints on parameters and return
@@ -69,6 +63,7 @@ public class MethodValidationInterceptor {
 	 *             if parameter validation fails.
 	 */
 	private void validateParameters(InvocationContext invocation) {
+/* FIXME:		
 		Set<MethodConstraintViolation<Object>> violations =
 				getValidator().validateAllParameters(
 						invocation.getTarget(), invocation.getMethod(), invocation.getParameters());
@@ -76,6 +71,7 @@ public class MethodValidationInterceptor {
 			throw new MethodConstraintViolationException(appendConditionViolationMessage(
 					new StringBuilder(), "precondition", violations).toString(), violations);
 		}
+*/
 	}
 
 	/**
@@ -87,6 +83,7 @@ public class MethodValidationInterceptor {
 	 *             if return value validation fails.
 	 */
 	private void validateReturnValue(InvocationContext invocation, Object returnValue) {
+/* FIXME:		
 		Set<MethodConstraintViolation<Object>> violations =
 				getValidator().validateReturnValue(
 						invocation.getTarget(), invocation.getMethod(), returnValue);
@@ -94,43 +91,44 @@ public class MethodValidationInterceptor {
 			throw new MethodConstraintViolationException(appendConditionViolationMessage(
 					new StringBuilder(), "postcondition", violations).toString(), violations);
 		}
+*/
 	}
 
-	/**
-	 * Appends a message which precisely describes the failed precondition or
-	 * postconditions.
-	 */
-	private StringBuilder appendConditionViolationMessage(StringBuilder message,
-			String conditionType, Set<MethodConstraintViolation<Object>> violations) {
-		message.append(conditionType);
-		message.append(" violations detected:");
-		return appendViolationMessages(message, violations);
-	}
-
-	/**
-	 * Appends messages for each violation.
-	 */
-	private StringBuilder appendViolationMessages(StringBuilder message,
-			Set<MethodConstraintViolation<Object>> violations) {
-		for (MethodConstraintViolation<Object> current : violations) {
-			message.append(" \"");
-			message.append(current.getPropertyPath());
-			message.append(" ");
-			message.append(current.getMessage());
-			message.append("\"");
-		}
-		return message;
-	}
-
-	/**
-	 * Returns a validator capable of validating annotated parameters and return
-	 * values.
-	 * <p>
-	 * In order to avoid concurrency issues on Validator instances, each call
-	 * returns a new instance.
-	 * </p>
-	 */
-	private MethodValidator getValidator() {
-		return this.validatorFactory.getValidator().unwrap(MethodValidator.class);
-	}
+//	/**
+//	 * Appends a message which precisely describes the failed precondition or
+//	 * postconditions.
+//	 */
+//	private StringBuilder appendConditionViolationMessage(StringBuilder message,
+//			String conditionType, Set<MethodConstraintViolation<Object>> violations) {
+//		message.append(conditionType);
+//		message.append(" violations detected:");
+//		return appendViolationMessages(message, violations);
+//	}
+//
+//	/**
+//	 * Appends messages for each violation.
+//	 */
+//	private StringBuilder appendViolationMessages(StringBuilder message,
+//			Set<MethodConstraintViolation<Object>> violations) {
+//		for (MethodConstraintViolation<Object> current : violations) {
+//			message.append(" \"");
+//			message.append(current.getPropertyPath());
+//			message.append(" ");
+//			message.append(current.getMessage());
+//			message.append("\"");
+//		}
+//		return message;
+//	}
+//
+//	/**
+//	 * Returns a validator capable of validating annotated parameters and return
+//	 * values.
+//	 * <p>
+//	 * In order to avoid concurrency issues on Validator instances, each call
+//	 * returns a new instance.
+//	 * </p>
+//	 */
+//	private MethodValidator getValidator() {
+//		return this.validatorFactory.getValidator().unwrap(MethodValidator.class);
+//	}
 }

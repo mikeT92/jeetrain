@@ -6,8 +6,6 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
 
-import edu.hm.cs.fwp.framework.core.dbc.Conditions;
-
 /**
  * Simple DTO that holds name and value of query parameters.
  * 
@@ -29,8 +27,6 @@ public final class QueryParameter implements Serializable {
 	}
 
 	public QueryParameter(String name, Object value) {
-		Conditions.requireParameterNotEmpty(name, "name");
-		Conditions.requireParameterNotNull(value, "value");
 		this.name = name;
 		this.value = value;
 	}
