@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<f:metadata>
+		<f:event type="preRenderView" listener="#{taskEditorBean.onPreRenderView}" />
+	</f:metadata>
+
+	<html>
+
+<h:head>
+	<title>Neuer Task</title>
+</h:head>
+<body>
+	<h1>Neuer Task</h1>
+	<h:form id="newTaskForm">
+		<h:messages id="newTaskMessages" globalOnly="false" />
+		<h:panelGrid columns="2">
+			<h:outputLabel for="subject" value="Betreff:" />
+			<h:inputText id="subject" value="#{taskEditorBean.task.subject}" validatorMessage="Bitte geben Sie einen Betreff ein!" />
+			<h:outputLabel for="description" value="Beschreibung:" />
+			<h:inputTextarea id="description" value="#{taskEditorBean.task.description}" validatorMessage="Bitte geben Sie eine Beschreibung ein!" />
+		</h:panelGrid>
+		<h:commandButton id="ok" value="OK" action="#{taskEditorBean.addTask}" />
+	</h:form>
+</body>
+	</html>
+</f:view>
