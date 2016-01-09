@@ -19,7 +19,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
-import org.apache.commons.lang.LocaleUtils;
+import org.apache.commons.lang3.LocaleUtils;
 
 /**
  * Managed bean that controls all user preferences regarding locales and

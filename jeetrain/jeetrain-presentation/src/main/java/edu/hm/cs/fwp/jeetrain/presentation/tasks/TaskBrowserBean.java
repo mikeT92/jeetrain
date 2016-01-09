@@ -42,8 +42,7 @@ public class TaskBrowserBean implements Serializable {
 		}
 
 		@Override
-		public List<Task> load(int first, int pageSize, String sortField,
-				SortOrder sortOrder, Map<String, String> filters) {
+		public List<Task> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,Object> filters) {
 			List<Task> tasksOnPage = this.taskStore.retrieveAllTasks();
 			setRowCount(tasksOnPage.size());
 			System.out.println(getClass().getSimpleName() + "#load: found ["

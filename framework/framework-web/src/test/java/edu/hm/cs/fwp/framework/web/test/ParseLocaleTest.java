@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 import java.util.Locale;
 
-import org.apache.commons.lang.LocaleUtils;
+import org.apache.commons.lang3.LocaleUtils;
 import org.junit.Test;
 
 /**

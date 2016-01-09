@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Utility class that introduces the design by contract principal into XFRAME

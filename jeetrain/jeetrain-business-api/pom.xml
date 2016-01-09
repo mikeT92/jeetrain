@@ -9,7 +9,7 @@
 	<artifactId>jeetrain-business-api</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>edu.hm.cs.fwp</groupId>
+			<groupId>edu.hm.cs.fwp.framework</groupId>
 			<artifactId>framework-core</artifactId>
 		</dependency>
 	</dependencies>

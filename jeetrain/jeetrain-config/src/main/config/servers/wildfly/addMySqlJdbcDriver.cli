@@ -1,0 +1,6 @@
+/subsystem=datasources/jdbc-driver=mysql:add(\
+    driver-name=mysql,\
+    driver-module-name=com.mysql,\
+    driver-class-name=com.mysql.jdbc.Driver,\
+    driver-xa-datasource-class-name=com.mysql.jdbc.jdbc2.optional.MysqlXADataSource\
+)

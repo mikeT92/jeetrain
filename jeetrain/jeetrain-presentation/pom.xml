@@ -7,25 +7,35 @@
 		<groupId>edu.hm.cs.fwp</groupId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>edu.hm.cs.fwp</groupId>
 	<artifactId>jeetrain-presentation</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 	<name>jeetrain-presentation</name>
-	<properties>
-		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-	</properties>
+	<packaging>war</packaging>
 	<dependencies>
 		<dependency>
 			<groupId>edu.hm.cs.fwp</groupId>
 			<artifactId>jeetrain-business-api</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>edu.hm.cs.fwp</groupId>
 			<artifactId>jeetrain-business</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-jdk14</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -34,23 +44,23 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>edu.hm.cs.fwp</groupId>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>all-themes</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>edu.hm.cs.fwp.framework</groupId>
 			<artifactId>framework-core</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>edu.hm.cs.fwp</groupId>
+			<groupId>edu.hm.cs.fwp.framework</groupId>
 			<artifactId>framework-web</artifactId>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>${project.artifactId}</finalName>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -58,64 +68,6 @@
 					<failOnMissingWebXml>true</failOnMissingWebXml>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.1</version>
-				<executions>
-					<execution>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${endorsed.dir}</outputDirectory>
-							<silent>true</silent>
-							<artifactItems>
-								<artifactItem>
-									<groupId>javax</groupId>
-									<artifactId>javaee-endorsed-api</artifactId>
-									<version>7.0</version>
-									<type>jar</type>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId> org.apache.maven.plugins 
-										</groupId>
-										<artifactId> maven-dependency-plugin 
-										</artifactId>
-										<versionRange> [2.1,) 
-										</versionRange>
-										<goals>
-											<goal>copy</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 </project>
