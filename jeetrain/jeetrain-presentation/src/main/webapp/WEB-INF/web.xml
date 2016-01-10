@@ -4,11 +4,6 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
      version="3.1">
 	<display-name>jeetrain-presentation</display-name>
-	<!-- JSTL context parameters -->
-	<context-param>
-		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
-		<param-value>resources.application</param-value>
-	</context-param>
 	<!-- JSF context parameters -->
 	<context-param>
 		<description>Stellt JSF auf die korrekte Projektstufe ein (Development..Production)</description>
@@ -38,7 +33,7 @@
 	</security-constraint>
 	<login-config>
 		<auth-method>FORM</auth-method>
-		<realm-name>JEETRAIN-REALM</realm-name>
+		<realm-name>JEETRAIN_REALM</realm-name>
 		<form-login-config>
 			<form-login-page>/login/login.jsf</form-login-page>
 			<form-error-page>/login/login.jsf</form-error-page>

@@ -13,18 +13,16 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
@@ -37,33 +35,26 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "T_USER")
-@NamedQueries({
-		@NamedQuery(name = User.QUERY_ALL, query = "SELECT u FROM User u ORDER BY u.fullName"),
+@NamedQueries({ @NamedQuery(name = User.QUERY_ALL, query = "SELECT u FROM User u ORDER BY u.fullName"),
 		@NamedQuery(name = User.COUNT_ALL, query = "SELECT COUNT(u) FROM User u"),
-		@NamedQuery(name = User.QUERY_BY_ID, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.id = :userId"),
-		@NamedQuery(name = User.QUERY_BY_NAME, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.userName = :userName") })
+		@NamedQuery(name = User.QUERY_BY_ID, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.id = :userId") })
 public class User implements Serializable {
 
-	public static final String QUERY_ALL = "edu.hm.cs.fwp.jeetrain.business.users.QUERY_ALL";
+	private static final String QUERY_NAME_PREFIX = "edu.hm.cs.fwp.jeetrain.business.users.";
 
-	public static final String COUNT_ALL = "edu.hm.cs.fwp.jeetrain.business.users.COUNT_ALL";
+	public static final String QUERY_ALL = QUERY_NAME_PREFIX + "QUERY_ALL";
 
-	public static final String QUERY_BY_ID = "edu.hm.cs.fwp.jeetrain.business.users.QUERY_BY_ID";
+	public static final String COUNT_ALL = QUERY_NAME_PREFIX + "COUNT_ALL";
 
-	public static final String QUERY_BY_NAME = "edu.hm.cs.fwp.jeetrain.business.users.QUERY_BY_NAME";
+	public static final String QUERY_BY_ID = QUERY_NAME_PREFIX + "QUERY_BY_ID";
 
 	private static final long serialVersionUID = -4518047765217559890L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="UserIdGenerator")
-	@SequenceGenerator(name="UserIdGenerator", sequenceName="USERS_SEQUENCE")
 	@Column(name = "USER_ID")
-	private long id;
-	
-	@Column(name = "USER_NAME")
 	@NotNull
 	@Size(min = 5, max = 16)
-	private String userName;
+	private String id;
 
 	@Column(name = "PASSWORD")
 	@NotNull
@@ -71,7 +62,6 @@ public class User implements Serializable {
 	private String password;
 
 	@Transient
-	@NotNull
 	@Size(min = 8, max = 64)
 	private String confirmedPassword;
 
@@ -113,6 +103,10 @@ public class User implements Serializable {
 	@Column(name = "MOBILE")
 	@Size(max = 16)
 	private String mobile;
+	
+	@Column(name="VERSION")
+	@Version
+	private int version;
 
 	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "USER_ID")
@@ -120,21 +114,14 @@ public class User implements Serializable {
 	@Size(min = 1)
 	private Set<Role> roles = new HashSet<Role>();
 
-	public long getId() {
+	public String getId() {
 		return this.id;
 	}
 
+	public void setId(String id) {
+		this.id = id;
+	}
 	
-	public String getUserName() {
-		return userName;
-	}
-
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-
 	public String getPassword() {
 		return password;
 	}
@@ -219,17 +206,13 @@ public class User implements Serializable {
 		this.mobile = mobile;
 	}
 
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result
-				+ ((userName == null) ? 0 : userName.hashCode());
+		int result = 17;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -240,16 +223,13 @@ public class User implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (id != other.id)
-			return false;
-		if (userName == null) {
-			if (other.userName != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!userName.equals(other.userName))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
-
 
 	/**
 	 * @see java.lang.Object#toString()
@@ -259,7 +239,6 @@ public class User implements Serializable {
 		StringBuilder result = new StringBuilder();
 		result.append(getClass().getSimpleName()).append(" {");
 		result.append(" id:").append(getId());
-		result.append(", userName:\"").append(getUserName()).append("\"");
 		result.append(" }");
 		return result.toString();
 	}

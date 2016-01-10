@@ -29,7 +29,7 @@ public interface UserRegistration {
 	 * 
 	 * @return newly persisted {@code User}
 	 */
-	public User registerUser(@NotNull @Valid User newUser);
+	public void registerUser(@NotNull @Valid User newUser);
 
 	/**
 	 * Retrieves the user with the specified user ID.
@@ -37,7 +37,7 @@ public interface UserRegistration {
 	 * @throws IllegalStateException
 	 *             , if there is no user with the specified user ID.
 	 */
-	public User retrieveUserById(long userId);
+	public User retrieveUserById(String userId);
 
 	/**
 	 * Returns <code>true</code>, if the specified username is available;
@@ -48,7 +48,7 @@ public interface UserRegistration {
 	/**
 	 * Unregisters the user identified by the given user ID.
 	 */
-	public void unregisterUser(long userId);
+	public void unregisterUser(String userId);
 
 	/**
 	 * Returns all registered users.

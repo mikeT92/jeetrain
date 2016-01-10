@@ -11,11 +11,11 @@
  -->	
 	<container qualifier="glassfish-remote" default="true">
 		<configuration>
-			<property name="adminUser">admin</property>
-			<property name="adminPassword"></property>
+			<property name="adminUser">gfadmin</property>
+			<property name="adminPassword">glassfish41</property>
 			<property name="adminHttps">false</property>
 			<property name="adminHost">localhost</property>
-			<property name="adminPort">10128</property>
+			<property name="adminPort">10048</property>
 			<property name="serverHttps">false</property>
 			<property name="target">server</property>
 		</configuration>

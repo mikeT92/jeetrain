@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 
 import edu.hm.cs.fwp.framework.core.logging.ejb.TraceInterceptor;
-import edu.hm.cs.fwp.framework.core.persistence.QueryParametersBuilder;
+import edu.hm.cs.fwp.framework.core.persistence.NamedQueryParameters;
 import edu.hm.cs.fwp.framework.core.validation.ejb.MethodValidationInterceptor;
 import edu.hm.cs.fwp.jeetrain.business.users.control.PasswordEncoderBean;
 import edu.hm.cs.fwp.jeetrain.business.users.entity.User;
@@ -40,25 +40,25 @@ public class UserRegistrationBean implements UserRegistration {
 	private PasswordEncoderBean passwordEncoder;
 
 	@Override
-	public User registerUser(User newUser) {
+	public void registerUser(User newUser) {
 		if (newUser.getRoles().isEmpty()) {
 			throw new IllegalArgumentException(
 					"At least one role must be attached to the specified user!");
 		}
 		newUser.setPassword(this.passwordEncoder.encode(newUser.getPassword()));
-		return this.userRepository.addEntity(newUser, User.class);
+		this.userRepository.addEntity(newUser);
 	}
 
 	@Override
 	public boolean isUserNameAvailable(String userName) {
-		return this.userRepository.queryEntity(User.QUERY_BY_NAME,
-				new QueryParametersBuilder()
-						.withParameter("userName", userName).build(), User.class) == null;
+		return this.userRepository.queryEntityWithNamedQuery(User.class, User.QUERY_BY_ID,
+				new NamedQueryParameters.Builder()
+						.withParameter("userName", userName).build()) == null;
 	}
 
 	@Override
-	public User retrieveUserById(long userId) {
-		return this.userRepository.getEntityById(userId, User.class);
+	public User retrieveUserById(String userId) {
+		return this.userRepository.getEntityById(User.class, userId);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class UserRegistrationBean implements UserRegistration {
 	 */
 	@Override
 	public List<User> retrieveAllUsers() {
-		return this.userRepository.queryEntities(User.QUERY_ALL, null, User.class);
+		return this.userRepository.queryEntitiesWithNamedQuery(User.class, User.QUERY_ALL, null);
 	}
 
 	/**
@@ -75,15 +75,15 @@ public class UserRegistrationBean implements UserRegistration {
 	 */
 	@Override
 	public List<User> retrieveAllUsers(int startIndex, int pageSize) {
-		return this.userRepository.queryEntitiesWithPagination(User.QUERY_ALL,
-				null, startIndex, pageSize, User.class);
+		return this.userRepository.queryEntitiesWithNamedQuery(User.class, User.QUERY_ALL,
+				null, startIndex, pageSize);
 	}
 
 	/**
 	 * @see eu.unicredit.utrain.business.users.UserRegistrationRemote#unregisterUser(String)
 	 */
 	@Override
-	public void unregisterUser(long userId) {
-		this.userRepository.removeEntityById(userId, User.class);
+	public void unregisterUser(String userId) {
+		this.userRepository.removeEntityById(User.class, userId);
 	}
 }
