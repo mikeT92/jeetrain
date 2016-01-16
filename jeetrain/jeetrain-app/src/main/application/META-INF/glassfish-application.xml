@@ -2,13 +2,16 @@
 GlassFish Application Server 3.1 Java EE Application 6.0//EN" 
 "http://glassfish.org/dtds/glassfish-application_6_0-1.dtd">
 <glassfish-application>
+	<!-- Achtung: Zu jedem role-name muss principal-name und group-name angegeben werden! -->
 	<security-role-mapping>
 		<role-name>JEETRAIN_USER</role-name>
 		<principal-name>JEETRAIN_USER</principal-name>
+		<group-name>JEETRAIN_USER</group-name>
 	</security-role-mapping>
 	<security-role-mapping>
 		<role-name>JEETRAIN_ADMIN</role-name>
 		<principal-name>JEETRAIN_ADMIN</principal-name>
+		<group-name>JEETRAIN_ADMIN</group-name>
 	</security-role-mapping>
 	<realm>JEETRAIN_REALM</realm>
 </glassfish-application>
