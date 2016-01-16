@@ -11,6 +11,7 @@ import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -54,6 +55,16 @@ public class UserEditorBean implements Serializable {
 	private User user;
 
 	/**
+	 * Alle verfügbaren Rollen, die Benutzer gewiesen werden können.
+	 */
+	private List<Role> availableRoles;
+
+	/**
+	 * Model für die Checkbox-Liste der zugewiesenen Rollen.
+	 */
+	private List<SelectItem> availableRolesModel;
+	
+	/**
 	 * Sets the value for view parameter userId passed to the associated view.
 	 */
 	public void setUserId(long userId) {
@@ -68,21 +79,18 @@ public class UserEditorBean implements Serializable {
 		return this.user;
 	}
 
-	public Roles[] getAvailableRoles() {
-		return Roles.values();
+	public List<Role> getAvailableRoles() {
+		return this.availableRoles;
 	}
 
-	public List<String> getRoles() {
-		List<String> result = new ArrayList<String>();
-		for (Role current : this.user.getRoles()) {
-			result.add(current.getRoleName().toString());
-		}
+	public List<Role> getAssignedRoles() {
+		List<Role> result = new ArrayList<>(this.user.getRoles());
 		return result;
 	}
 
-	public void setRoles(List<String> roles) {
-		for (String roleName : roles) {
-			this.user.getRoles().add(new Role(Roles.valueOf(roleName)));
+	public void setAssignedRoles(List<Role> roles) {
+		for (Role current : roles) {
+			this.user.getRoles().add(current);
 		}
 	}
 
@@ -104,10 +112,13 @@ public class UserEditorBean implements Serializable {
 	 */
 	public void onPreRenderView() {
 		System.out.println("userEditor.onPreRenderView");
+		if (this.availableRoles == null) {
+			this.availableRoles = this.boundary.retrieveAllRoles();
+		}
 		if (this.user == null) {
 			if (this.userId == 0L) {
 				this.user = new User();
-				this.user.getRoles().add(new Role(Roles.JEETRAIN_USER));
+				this.user.getRoles().add(findRoleByName(Roles.JEETRAIN_USER.name()));
 			} else {
 				this.user = this.boundary
 						.retrieveUserById(this.userId);
@@ -116,11 +127,11 @@ public class UserEditorBean implements Serializable {
 	}
 
 	public String register() {
-		if (!this.boundary.isUserNameAvailable(this.user.getUserName())) {
+		if (!this.boundary.isUserNameAvailable(this.user.getName())) {
 			FacesContext.getCurrentInstance().addMessage(
 					"userName",
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Username ["
-							+ user.getUserName()
+							+ user.getName()
 							+ "] is already used by another user.", null));
 			return null;
 		}
@@ -142,7 +153,7 @@ public class UserEditorBean implements Serializable {
 							"Please select at least one role.", null));
 			return null;
 		}
-		this.user = this.boundary.registerUser(this.user);
+		this.boundary.registerUser(this.user);
 		return "confirmUser?faces-redirect=true";
 	}
 
@@ -151,5 +162,16 @@ public class UserEditorBean implements Serializable {
 			this.conversation.end();
 		}
 		return "login";
+	}
+	
+	public Role findRoleByName(String roleName) {
+		Role result = null;
+		for (Role current : this.availableRoles) {
+			if (current.getName().equals(roleName)) {
+				result = current;
+				break;
+			}
+		}
+		return result;
 	}
 }

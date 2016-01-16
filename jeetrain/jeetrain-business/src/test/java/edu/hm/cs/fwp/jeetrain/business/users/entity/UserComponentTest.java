@@ -18,6 +18,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -45,11 +46,20 @@ public class UserComponentTest {
 	@Inject
 	GenericRepositoryBean repository;
 
-	private List<String> trashCan = new ArrayList<>();
+	private List<Long> trashCan = new ArrayList<>();
 
+	private List<Role> roles;
+	
+	@Before
+	public void onBefore() {
+		if (this.roles == null) {
+			this.roles = this.repository.queryEntitiesWithNamedQuery(Role.class, Role.QUERY_ALL, null);
+		}
+	}
+	
 	@After
 	public void onAfter() {
-		for (String userId : this.trashCan) {
+		for (long userId : this.trashCan) {
 			try {
 				this.repository.removeEntityById(User.class, userId);
 			} catch (Exception ex) {
@@ -77,7 +87,7 @@ public class UserComponentTest {
 
 	private User createStandardUser() {
 		User result = new User();
-		result.setId(buildRandomUserId());
+		result.setName(buildRandomUserName());
 		result.setPassword("fwpss2013");
 		result.setConfirmedPassword(result.getConfirmedPassword());
 		result.setFirstName("Klaus");
@@ -88,11 +98,11 @@ public class UserComponentTest {
 		result.setEmail("klaus.mustermann@hm.edu");
 		result.setPhone("08937846498");
 		result.setMobile("01707875474");
-		result.getRoles().add(new Role(Roles.JEETRAIN_USER));
+		result.getRoles().add(this.roles.get(0));
 		return result;
 	}
 
-	private String buildRandomUserId() {
+	private String buildRandomUserName() {
 		StringBuilder result = new StringBuilder(16);
 		result.append("U");
 		result.append(System.nanoTime() % 1000000);

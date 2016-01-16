@@ -23,41 +23,41 @@
 						<legend>User:</legend>
 						<h:panelGrid columns="2">
 							<p:outputLabel id="userNameLabel" for="userName" value="Username:" />
-							<p:inputText id="userName" value="#{userEditor.user.userName}" required="true" />
-							<h:outputLabel id="passwordLabel" for="password" value="Password:" />
-							<h:inputSecret id="password" value="#{userEditor.user.password}" required="true" />
-							<h:outputLabel id="confirmedPasswordLabel" for="confirmedPassword" value="Confirmed password:" />
-							<h:inputSecret id="confirmedPassword" value="#{userEditor.user.confirmedPassword}" required="true" />
-							<h:outputLabel id="firstNameLabel" for="firstName" value="First name:" />
-							<h:inputText id="firstName" value="#{userEditor.user.firstName}" required="true" />
-							<h:outputLabel id="lastNameLabel" for="lastName" value="Last name:" />
-							<h:inputText id="lastName" value="#{userEditor.user.lastName}" required="true" />
-							<h:outputLabel id="fullNameLabel" for="fullName" value="Full name:" />
-							<h:inputText id="fullName" value="#{userEditor.user.fullName}" required="true" />
-							<h:outputLabel id="genderLabel" for="gender" value="Gender:" />
+							<p:inputText id="userName" value="#{userEditor.user.name}" required="true" />
+							<p:outputLabel id="passwordLabel" for="password" value="Password:" />
+							<p:password id="password" value="#{userEditor.user.password}" required="true" />
+							<p:outputLabel id="confirmedPasswordLabel" for="confirmedPassword" value="Confirmed password:" />
+							<p:password id="confirmedPassword" value="#{userEditor.user.confirmedPassword}" required="true" />
+							<p:outputLabel id="firstNameLabel" for="firstName" value="First name:" />
+							<p:inputText id="firstName" value="#{userEditor.user.firstName}" required="true" />
+							<p:outputLabel id="lastNameLabel" for="lastName" value="Last name:" />
+							<p:inputText id="lastName" value="#{userEditor.user.lastName}" required="true" />
+							<p:outputLabel id="fullNameLabel" for="fullName" value="Full name:" />
+							<p:inputText id="fullName" value="#{userEditor.user.fullName}" required="true" />
+							<p:outputLabel id="genderLabel" for="gender" value="Gender:" />
 							<h:panelGroup>
-								<h:selectOneRadio id="gender" value="#{userEditor.user.gender}">
+								<p:selectOneRadio id="gender" value="#{userEditor.user.gender}">
 									<f:selectItem id="femaleGenderOption" itemLabel="Female" itemValue="FEMALE"/>
 									<f:selectItem id="maleGenderOption" itemLabel="Male" itemValue="MALE"/>
-								</h:selectOneRadio>
+								</p:selectOneRadio>
 							</h:panelGroup>
-							<h:outputLabel id="dateOfBirthLabel" for="dateOfBirth" value="Date of birth (YYYY-MM-DD):" />
-							<h:inputText id="dateOfBirth" value="#{userEditor.user.dateOfBirth}" required="true" >
+							<p:outputLabel id="dateOfBirthLabel" for="dateOfBirth" value="Date of birth (YYYY-MM-DD):" />
+							<p:inputText id="dateOfBirth" value="#{userEditor.user.dateOfBirth}" required="true" >
 								<f:convertDateTime type="date" pattern="yyyy-MM-dd" />
-							</h:inputText>
-							<h:outputLabel id="emailLabel" for="email" value="Email:" />
-							<h:inputText id="email" value="#{userEditor.user.email}" required="true" />
-							<h:outputLabel id="phoneLabel" for="phone" value="Phone:" />
-							<h:inputText id="phone" value="#{userEditor.user.phone}" />
-							<h:outputLabel id="mobileLabel" for="mobile" value="Mobile:" />
-							<h:inputText id="mobile" value="#{userEditor.user.mobile}" />
+							</p:inputText>
+							<p:outputLabel id="emailLabel" for="email" value="Email:" />
+							<p:inputText id="email" value="#{userEditor.user.email}" required="true" />
+							<p:outputLabel id="phoneLabel" for="phone" value="Phone:" />
+							<p:inputText id="phone" value="#{userEditor.user.phone}" />
+							<p:outputLabel id="mobileLabel" for="mobile" value="Mobile:" />
+							<p:inputText id="mobile" value="#{userEditor.user.mobile}" />
 						</h:panelGrid>
 					</fieldset>
 					<fieldset>
 						<legend>Assigned Roles:</legend>
-						<h:selectManyCheckbox id="roles" value="#{userEditor.roles}">
-							<f:selectItems value="#{userEditor.availableRoles}" var="current" itemLabel="#{current}" itemValue="#{current}" />
-						</h:selectManyCheckbox>
+						<p:selectManyCheckbox id="roles" value="#{userEditor.assignedRoles}">
+							<f:selectItems value="#{userEditor.availableRoles}" var="current" itemLabel="#{current.name}" itemValue="#{current.id}" />
+						</p:selectManyCheckbox>
 					</fieldset>
 					<h:panelGrid columns="3">
 						<h:commandButton id="registerButton" action="#{userEditor.register}" value="Register" />

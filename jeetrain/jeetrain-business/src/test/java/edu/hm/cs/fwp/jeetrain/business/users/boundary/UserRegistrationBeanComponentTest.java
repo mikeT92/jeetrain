@@ -19,10 +19,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import edu.hm.cs.fwp.framework.core.logging.ejb.TraceInterceptor;
+import edu.hm.cs.fwp.framework.core.persistence.AbstractGenericRepository;
+import edu.hm.cs.fwp.framework.core.validation.ejb.MethodValidationInterceptor;
+import edu.hm.cs.fwp.jeetrain.business.users.control.PasswordEncoderBean;
 import edu.hm.cs.fwp.jeetrain.business.users.entity.Gender;
 import edu.hm.cs.fwp.jeetrain.business.users.entity.Role;
 import edu.hm.cs.fwp.jeetrain.business.users.entity.Roles;
 import edu.hm.cs.fwp.jeetrain.business.users.entity.User;
+import edu.hm.cs.fwp.jeetrain.integration.GenericRepositoryBean;
 
 /**
  * @author theism
@@ -34,12 +39,16 @@ public class UserRegistrationBeanComponentTest {
 	@Inject
 	private UserRegistrationBean underTest;
 
-	private List<String> trashCan = new ArrayList<>();
+	private List<Long> trashCan = new ArrayList<>();
 
 	@Deployment
 	public static JavaArchive createDeployment() {
-		return ShrinkWrap.create(JavaArchive.class).addPackage(
-				"edu.hm.cs.fwp.jeetrain.business.users");
+		return ShrinkWrap.create(JavaArchive.class).addClass(UserRegistrationBean.class).addClass(UserRegistration.class)
+				.addClass(PasswordEncoderBean.class).addPackage(User.class.getPackage())
+				.addClass(TraceInterceptor.class).addClass(MethodValidationInterceptor.class)
+				.addClass(GenericRepositoryBean.class).addPackage(AbstractGenericRepository.class.getPackage())
+				.addAsManifestResource("arquillian-persistence.xml", "persistence.xml")
+				.addAsManifestResource("arquillian-beans.xml", "beans.xml");
 	}
 
 	/**
@@ -93,7 +102,7 @@ public class UserRegistrationBeanComponentTest {
 
 	@After
 	public void tearDown() throws Exception {
-		for (String userId : this.trashCan) {
+		for (long userId : this.trashCan) {
 			try {
 				this.underTest.unregisterUser(userId);
 			} catch (Exception ex) {
@@ -103,7 +112,7 @@ public class UserRegistrationBeanComponentTest {
 
 	private User createStandardUser() {
 		User result = new User();
-		result.setId(buildRandomUserId());
+		result.setName(buildRandomUserName());
 		result.setPassword("fwpss2013");
 		result.setConfirmedPassword(result.getConfirmedPassword());
 		result.setFirstName("Klaus");
@@ -114,11 +123,11 @@ public class UserRegistrationBeanComponentTest {
 		result.setEmail("klaus.mustermann@hm.edu");
 		result.setPhone("08937846498");
 		result.setMobile("01707875474");
-		result.getRoles().add(new Role(Roles.JEETRAIN_USER));
+		result.getRoles().add(this.underTest.retrieveAllRoles().get(0));
 		return result;
 	}
 
-	private String buildRandomUserId() {
+	private String buildRandomUserName() {
 		StringBuilder result = new StringBuilder(16);
 		result.append("U");
 		result.append(System.nanoTime() % 1000000);

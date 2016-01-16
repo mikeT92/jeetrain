@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import edu.hm.cs.fwp.jeetrain.business.users.entity.Role;
 import edu.hm.cs.fwp.jeetrain.business.users.entity.User;
 
 /**
@@ -37,7 +38,15 @@ public interface UserRegistration {
 	 * @throws IllegalStateException
 	 *             , if there is no user with the specified user ID.
 	 */
-	public User retrieveUserById(String userId);
+	public User retrieveUserById(long userId);
+
+	/**
+	 * Retrieves the user with the specified user name.
+	 * 
+	 * @throws IllegalStateException
+	 *             , if there is no user with the specified user name.
+	 */
+	public User retrieveUserByName(String userName);
 
 	/**
 	 * Returns <code>true</code>, if the specified username is available;
@@ -48,7 +57,7 @@ public interface UserRegistration {
 	/**
 	 * Unregisters the user identified by the given user ID.
 	 */
-	public void unregisterUser(String userId);
+	public void unregisterUser(long userId);
 
 	/**
 	 * Returns all registered users.
@@ -70,4 +79,10 @@ public interface UserRegistration {
 	 *         users can be found, never <code>null</code>.
 	 */
 	public List<User> retrieveAllUsers(int startIndex, int pageSize);
+	
+	/**
+	 * Liefert alle verfügbaren Rollen zurück, die einem Benutzer zugewiesen werden können.
+	 * @return
+	 */
+	public List<Role> retrieveAllRoles();
 }

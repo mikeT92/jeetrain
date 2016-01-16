@@ -2,8 +2,10 @@
  */
 package edu.hm.cs.fwp.jeetrain.business.users.control;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Named;
@@ -20,30 +22,23 @@ import javax.inject.Named;
 @Dependent
 public class PasswordEncoderBean {
 
-	private static final char[] HEXADECIMAL = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-			'a', 'b', 'c', 'd', 'e', 'f' };
-
+	private static final String DEFAULT_DIGEST_ALGORITHM = "MD5";
+	
+	private String digestAlgorithm = DEFAULT_DIGEST_ALGORITHM;
+	
 	/**
 	 * Return the specified password after encoding.
 	 */
 	public String encode(String password) {
-
 		MessageDigest md = null;
 		try {
-			md = MessageDigest.getInstance("MD5");
+			md = MessageDigest.getInstance(this.digestAlgorithm);
 		} catch (NoSuchAlgorithmException ex) {
 			throw new IllegalStateException("Unable to encrypt password", ex);
 		}
 		md.reset();
 
 		byte[] encryptedPassword = md.digest(password.getBytes());
-		StringBuilder sb = new StringBuilder(2 * encryptedPassword.length);
-		for (byte current : encryptedPassword) {
-			int low = (int) (current & 0x0f);
-			int high = (int) ((current & 0xf0) >> 4);
-			sb.append(HEXADECIMAL[high]);
-			sb.append(HEXADECIMAL[low]);
-		}
-		return sb.toString();
+		return new String(Base64.getEncoder().encode(encryptedPassword), StandardCharsets.UTF_8);
 	}
 }

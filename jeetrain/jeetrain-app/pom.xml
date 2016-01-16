@@ -16,8 +16,14 @@
 				<artifactId>maven-ear-plugin</artifactId>
 				<configuration>
 					<version>7</version>
+					<generateApplicationXml>true</generateApplicationXml>
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
 					<modules>
+						<webModule>
+							<groupId>edu.hm.cs.fwp.jeetrain</groupId>
+							<artifactId>jeetrain-presentation</artifactId>
+							<contextRoot>/jeetrain</contextRoot>
+						</webModule>
 					</modules>
 					<fileNameMapping>no-version</fileNameMapping>
 					<security>

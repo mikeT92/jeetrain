@@ -6,13 +6,10 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 
 /**
  * Role that can be assigned to a JEETRAIN user.
@@ -21,41 +18,29 @@ import javax.persistence.TableGenerator;
  */
 @Entity
 @Table(name = "T_ROLE")
+@NamedQueries({@NamedQuery(name=Role.QUERY_ALL, query = "SELECT r FROM Role r")})
 public class Role implements Serializable {
 
-	private static final long serialVersionUID = 8985105701544649718L;
-
+	private static final String QUERY_NAME_PREFIX = "edu.hm.cs.fwp.jeetrain.business.users.entity.Role.";
+	
+	public static final String QUERY_ALL = QUERY_NAME_PREFIX + "QUERY_ALL";
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "Role.id.generator")
-	@TableGenerator(name = "Role.id.generator", table = "T_SEQUENCE", pkColumnName = "SEQUENCE_NAME", pkColumnValue = "T_ROLE", valueColumnName = "NEXT_VAL")
 	@Column(name = "ROLE_ID")
-	private long roleId;
+	private long id;
 	
 	@Column(name = "ROLE_NAME")
-	@Enumerated(EnumType.STRING)
-	private Roles roleName;
+	private String name;
 
 	public Role() {
 	}
 
-	public Role(Roles roleName) {
-		this.roleName = roleName;
-	}
-	
-	public void setRoleId(long roleId) {
-		this.roleId = roleId;
+	public long getId() {
+		return this.id;
 	}
 
-	public long getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleName(Roles roleName) {
-		this.roleName = roleName;
-	}
-
-	public Roles getRoleName() {
-		return roleName;
+	public String getName() {
+		return this.name;
 	}
 
 	/**
@@ -64,8 +49,9 @@ public class Role implements Serializable {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((roleName == null) ? 0 : roleName.hashCode());
+		int result = 17;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -74,15 +60,26 @@ public class Role implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Role other = (Role) obj;
-		if (roleName != other.roleName)
+		if (id != other.id) {
 			return false;
+		}
+		if (name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!name.equals(other.name)) {
+			return false;
+		}
 		return true;
 	}
 
@@ -91,6 +88,6 @@ public class Role implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return this.roleName.toString();
+		return this.name;
 	}
 }
