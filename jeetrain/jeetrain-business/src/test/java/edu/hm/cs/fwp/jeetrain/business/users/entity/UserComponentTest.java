@@ -46,7 +46,7 @@ public class UserComponentTest {
 	@Inject
 	GenericRepositoryBean repository;
 
-	private List<Long> trashCan = new ArrayList<>();
+	private List<String> trashCan = new ArrayList<>();
 
 	private List<Role> roles;
 	
@@ -59,7 +59,7 @@ public class UserComponentTest {
 	
 	@After
 	public void onAfter() {
-		for (long userId : this.trashCan) {
+		for (String userId : this.trashCan) {
 			try {
 				this.repository.removeEntityById(User.class, userId);
 			} catch (Exception ex) {
@@ -87,9 +87,7 @@ public class UserComponentTest {
 
 	private User createStandardUser() {
 		User result = new User();
-		result.setName(buildRandomUserName());
-		result.setPassword("fwpss2013");
-		result.setConfirmedPassword(result.getConfirmedPassword());
+		result.setId(buildRandomUserId());
 		result.setFirstName("Klaus");
 		result.setLastName("Mustermann");
 		result.setFullName("Mustermann Klaus");
@@ -102,7 +100,7 @@ public class UserComponentTest {
 		return result;
 	}
 
-	private String buildRandomUserName() {
+	private String buildRandomUserId() {
 		StringBuilder result = new StringBuilder(16);
 		result.append("U");
 		result.append(System.nanoTime() % 1000000);

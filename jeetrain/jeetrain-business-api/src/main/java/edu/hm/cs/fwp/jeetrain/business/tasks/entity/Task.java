@@ -15,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -48,8 +47,7 @@ public class Task implements Serializable, AuditableEntity {
 	 * Unique identifier of this task.
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE, generator="Task.id.generator")
-	@TableGenerator(name="Task.id.generator", table="T_SEQUENCE")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tasksSequence")
 	@Column(name = "TASK_ID")
 	private long id;
 

@@ -6,14 +6,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -21,7 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -40,11 +36,10 @@ import javax.validation.constraints.Size;
 @Table(name = "T_USER")
 @NamedQueries({ @NamedQuery(name = User.QUERY_ALL, query = "SELECT u FROM User u ORDER BY u.fullName"),
 		@NamedQuery(name = User.COUNT_ALL, query = "SELECT COUNT(u) FROM User u"),
-		@NamedQuery(name = User.QUERY_BY_NAME, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.name = :userName"),
 		@NamedQuery(name = User.QUERY_BY_ID, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.id = :userId") })
 public class User implements Serializable {
 
-	private static final String QUERY_NAME_PREFIX = "edu.hm.cs.fwp.jeetrain.business.users.";
+	private static final String QUERY_NAME_PREFIX = "edu.hm.cs.fwp.jeetrain.business.users.User.";
 
 	public static final String QUERY_ALL = QUERY_NAME_PREFIX + "QUERY_ALL";
 
@@ -52,29 +47,11 @@ public class User implements Serializable {
 
 	public static final String QUERY_BY_ID = QUERY_NAME_PREFIX + "QUERY_BY_ID";
 
-	public static final String QUERY_BY_NAME = QUERY_NAME_PREFIX + "QUERY_BY_NAME";
-
-	private static final long serialVersionUID = -4518047765217559890L;
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "User.id.generator")
-	@TableGenerator(name = "User.id.generator", table = "T_SEQUENCE", pkColumnName = "SEQUENCE_NAME", pkColumnValue = "T_USER", valueColumnName = "NEXT_VAL")
-	@Column(name = "USER_ID")
-	private long id;
-
-	@Column(name = "USER_NAME")
 	@NotNull
 	@Size(min = 5, max = 16)
-	private String name;
-
-	@Column(name = "PASSWORD")
-	@NotNull
-	@Size(min = 8, max = 64)
-	private String password;
-
-	@Transient
-	@Size(min = 8, max = 64)
-	private String confirmedPassword;
+	@Column(name = "USER_ID")
+	private String id;
 
 	@Column(name = "FIRST_NAME")
 	@NotNull
@@ -135,32 +112,12 @@ public class User implements Serializable {
 	@Size(min = 1)
 	private Set<Role> roles = new HashSet<Role>();
 
-	public long getId() {
+	public String getId() {
 		return this.id;
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getConfirmedPassword() {
-		return confirmedPassword;
-	}
-
-	public void setConfirmedPassword(String confirmedPassword) {
-		this.confirmedPassword = confirmedPassword;
+	public void setId(String userId) {
+		this.id = userId;
 	}
 
 	public Collection<Role> getRoles() {
@@ -238,8 +195,7 @@ public class User implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -258,14 +214,11 @@ public class User implements Serializable {
 			return false;
 		}
 		User other = (User) obj;
-		if (id != other.id) {
-			return false;
-		}
-		if (name == null) {
-			if (other.name != null) {
+		if (id == null) {
+			if (other.id != null) {
 				return false;
 			}
-		} else if (!name.equals(other.name)) {
+		} else if (!id.equals(other.id)) {
 			return false;
 		}
 		return true;
@@ -279,7 +232,6 @@ public class User implements Serializable {
 		StringBuilder result = new StringBuilder();
 		result.append(getClass().getSimpleName()).append(" {");
 		result.append(" id:").append(getId());
-		result.append(", name: \"").append(getId()).append("\"");
 		result.append(" }");
 		return result.toString();
 	}

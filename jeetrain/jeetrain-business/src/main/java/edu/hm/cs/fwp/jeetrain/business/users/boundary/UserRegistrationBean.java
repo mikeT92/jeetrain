@@ -16,6 +16,7 @@ import edu.hm.cs.fwp.framework.core.logging.ejb.TraceInterceptor;
 import edu.hm.cs.fwp.framework.core.persistence.NamedQueryParameters;
 import edu.hm.cs.fwp.framework.core.validation.ejb.MethodValidationInterceptor;
 import edu.hm.cs.fwp.jeetrain.business.users.control.PasswordEncoderBean;
+import edu.hm.cs.fwp.jeetrain.business.users.entity.Credential;
 import edu.hm.cs.fwp.jeetrain.business.users.entity.Role;
 import edu.hm.cs.fwp.jeetrain.business.users.entity.User;
 import edu.hm.cs.fwp.jeetrain.integration.GenericRepositoryBean;
@@ -41,28 +42,32 @@ public class UserRegistrationBean implements UserRegistration {
 	private PasswordEncoderBean passwordEncoder;
 
 	@Override
-	public void registerUser(User newUser) {
-		if (newUser.getRoles().isEmpty()) {
-			throw new IllegalArgumentException("At least one role must be attached to the specified user!");
+	public void registerUser(User newUser, String password, String confirmedPassword) {
+		if (!isUserIdAvailable(newUser.getId())) {
+			throw new IllegalArgumentException(
+					"The specified user ID [" + newUser.getId() + "] is already used by another user!");
 		}
-		newUser.setPassword(this.passwordEncoder.encode(newUser.getPassword()));
+		if (newUser.getRoles().isEmpty()) {
+			throw new IllegalArgumentException(
+					"At least one role must be attached to the specified user [" + newUser.getId() + "]!");
+		}
+		if (!password.equals(confirmedPassword)) {
+			throw new IllegalArgumentException("Passwords of user [" + newUser.getId() + "] must match!");
+		}
 		this.repository.addEntity(newUser);
+		Credential newCredential = new Credential(newUser.getId(), this.passwordEncoder.encode(password));
+		this.repository.addEntity(newCredential);
 	}
 
 	@Override
-	public boolean isUserNameAvailable(String userName) {
-		return retrieveUserByName(userName) == null;
+	public boolean isUserIdAvailable(String userId) {
+		return retrieveUserById(userId) == null;
 	}
 
 	@Override
-	public User retrieveUserById(long userId) {
-		return this.repository.getEntityById(User.class, userId);
-	}
-
-	@Override
-	public User retrieveUserByName(String userName) {
-		return this.repository.queryEntityWithNamedQuery(User.class, User.QUERY_BY_NAME,
-				new NamedQueryParameters.Builder().withParameter("userName", userName).build());
+	public User retrieveUserById(String userId) {
+		return this.repository.queryEntityWithNamedQuery(User.class, User.QUERY_BY_ID,
+				new NamedQueryParameters.Builder().withParameter("userId", userId).build());
 	}
 
 	/**
@@ -86,8 +91,9 @@ public class UserRegistrationBean implements UserRegistration {
 	 * @see eu.unicredit.utrain.business.users.UserRegistrationRemote#unregisterUser(String)
 	 */
 	@Override
-	public void unregisterUser(long userId) {
+	public void unregisterUser(String userId) {
 		this.repository.removeEntityById(User.class, userId);
+		this.repository.removeEntityById(Credential.class, userId);
 	}
 
 	@Override

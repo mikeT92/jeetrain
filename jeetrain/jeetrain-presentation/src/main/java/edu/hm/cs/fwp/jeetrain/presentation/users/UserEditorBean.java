@@ -14,6 +14,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import edu.hm.cs.fwp.jeetrain.business.users.boundary.UserRegistrationBean;
 import edu.hm.cs.fwp.jeetrain.business.users.entity.Role;
@@ -47,13 +49,27 @@ public class UserEditorBean implements Serializable {
 	 * Unique identifier of the user the editor currently works on. (view
 	 * parameter)
 	 */
-	private long userId;
+	private String userId;
 
 	/**
 	 * Current user this editor is working on.
 	 */
 	private User user;
 
+	/**
+	 * Kennwort.
+	 */
+	@NotNull
+	@Size(min=8, max=16)
+	private String password;
+	
+	/**
+	 * Kennwort zur Bestätigung.
+	 */
+	@NotNull
+	@Size(min=8, max=16)
+	private String confirmedPassword;
+	
 	/**
 	 * Alle verfügbaren Rollen, die Benutzer gewiesen werden können.
 	 */
@@ -67,11 +83,11 @@ public class UserEditorBean implements Serializable {
 	/**
 	 * Sets the value for view parameter userId passed to the associated view.
 	 */
-	public void setUserId(long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
-	public long getUserId() {
+	public String getUserId() {
 		return this.userId;
 	}
 
@@ -79,6 +95,22 @@ public class UserEditorBean implements Serializable {
 		return this.user;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public String getConfirmedPassword() {
+		return confirmedPassword;
+	}
+	
+	public void setConfirmedPassword(String confirmedPassword) {
+		this.confirmedPassword = confirmedPassword;
+	}
+	
 	public List<Role> getAvailableRoles() {
 		return this.availableRoles;
 	}
@@ -116,7 +148,7 @@ public class UserEditorBean implements Serializable {
 			this.availableRoles = this.boundary.retrieveAllRoles();
 		}
 		if (this.user == null) {
-			if (this.userId == 0L) {
+			if (this.userId == null) {
 				this.user = new User();
 				this.user.getRoles().add(findRoleByName(Roles.JEETRAIN_USER.name()));
 			} else {
@@ -127,15 +159,15 @@ public class UserEditorBean implements Serializable {
 	}
 
 	public String register() {
-		if (!this.boundary.isUserNameAvailable(this.user.getName())) {
+		if (!this.boundary.isUserIdAvailable(this.user.getId())) {
 			FacesContext.getCurrentInstance().addMessage(
 					"userName",
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Username ["
-							+ user.getName()
+							+ user.getId()
 							+ "] is already used by another user.", null));
 			return null;
 		}
-		if (!this.user.getPassword().equals(this.user.getConfirmedPassword())) {
+		if (!this.password.equals(this.confirmedPassword)) {
 			FacesContext
 					.getCurrentInstance()
 					.addMessage(
@@ -153,7 +185,7 @@ public class UserEditorBean implements Serializable {
 							"Please select at least one role.", null));
 			return null;
 		}
-		this.boundary.registerUser(this.user);
+		this.boundary.registerUser(this.user, this.password, this.confirmedPassword);
 		return "confirmUser?faces-redirect=true";
 	}
 
