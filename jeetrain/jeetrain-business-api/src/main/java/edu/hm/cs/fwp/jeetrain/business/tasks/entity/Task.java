@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -39,15 +40,18 @@ public class Task implements Serializable, AuditableEntity {
 
 	private static final long serialVersionUID = 6549807945660625663L;
 
-	public static final String QUERY_ALL = "edu.hm.cs.fwp.jeetrain.business.tasks.entity.Task.QUERY_ALL";
+	private static final String JPA_NAME_PREFIX = "edu.hm.cs.fwp.jeetrain.business.tasks.entity.Task.";
+	
+	public static final String QUERY_ALL = JPA_NAME_PREFIX + "QUERY_ALL";
 
-	public static final String COUNT_ALL = "edu.hm.cs.fwp.jeetrain.business.tasks.entity.Task.COUNT_ALL";
+	public static final String COUNT_ALL = JPA_NAME_PREFIX + "COUNT_ALL";
 
 	/**
 	 * Unique identifier of this task.
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tasksSequence")
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "Task.id.generator")
+	@TableGenerator(name = "Task.id.generator", table = "T_SEQUENCE", pkColumnName = "SEQUENCE_NAME", pkColumnValue = "T_TASK", valueColumnName = "NEXT_VAL")
 	@Column(name = "TASK_ID")
 	private long id;
 
@@ -95,7 +99,7 @@ public class Task implements Serializable, AuditableEntity {
 	 * Expected to be set when task lifeCycleState is <code>running</code>.
 	 * </p>
 	 */
-	@Column(name = "REQUEST_DATE")
+	@Column(name = "SUBMISSION_DATE")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date submissionDate;
 
@@ -105,7 +109,7 @@ public class Task implements Serializable, AuditableEntity {
 	 * Expected to be set when task lifeCycleState is <code>completed</code>.
 	 * </p>
 	 */
-	@Column(name = "REQUESTER_USER_ID")
+	@Column(name = "SUBMITTER_USER_ID")
 	private String submitterUserId;
 
 	/**
@@ -203,7 +207,7 @@ public class Task implements Serializable, AuditableEntity {
 	 * User ID of the user who created this entity.
 	 */
 	@Size(max = 16)
-	@Column(name = "CREATOR_ID")
+	@Column(name = "CREATOR_USER_ID")
 	private String creatorId;
 
 	/**
@@ -217,7 +221,7 @@ public class Task implements Serializable, AuditableEntity {
 	 * User ID of the user who modified this entity.
 	 */
 	@Size(max = 16)
-	@Column(name = "LAST_MODIFIER_ID")
+	@Column(name = "LAST_MODIFIER_USER_ID")
 	private String lastModifierId;
 
 	/**
@@ -229,10 +233,6 @@ public class Task implements Serializable, AuditableEntity {
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getSubject() {
@@ -408,6 +408,8 @@ public class Task implements Serializable, AuditableEntity {
 		}
 		this.creatorId = creatorId;
 		this.creationDate = creationDate;
+		this.lastModifierId = creatorId;
+		this.lastModificationDate = creationDate;
 	}
 
 	/**

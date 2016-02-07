@@ -2,11 +2,10 @@ package edu.hm.cs.fwp.jeetrain.business.tasks.entity;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,7 +15,6 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -70,6 +68,11 @@ public class TaskComponentTest {
 
 	private Task createDummyTask() {
 		Task result = new Task();
+		result.setSubject("subject");
+		result.setDescription("description");
+		result.setCategory(TaskCategory.BUGFIX);
+		result.setPriority(TaskPriority.LOW);
+		result.trackCreation("mtheis", Calendar.getInstance().getTime());
 		return result;
 	}
 }

@@ -20,7 +20,7 @@
 			<dependency>
 				<groupId>org.glassfish.main.extras</groupId>
 				<artifactId>glassfish-embedded-all</artifactId>
-				<version>4.0</version>
+				<version>4.1.1</version>
 			</dependency>
 			<!-- Generic JEE 7 runtime dependencies -->
 			<dependency>
@@ -68,7 +68,7 @@
 			<dependency>
 				<groupId>org.primefaces</groupId>
 				<artifactId>primefaces</artifactId>
-				<version>5.2</version>
+				<version>5.3</version>
 			</dependency>
 			<!-- framework dependencies -->
 			<dependency>

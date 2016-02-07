@@ -1,8 +1,8 @@
-@CHARSET "ISO-8859-1";
+@CHARSET "UTF-8";
 
 body {
 	font-family: Segoe UI, Arial;
-	font-size: 100%;
+	font-size: 12pt;
 }
 
 #container {
@@ -24,4 +24,8 @@ body {
 
 #footer {
 	
+}
+
+div.clear {
+	clear: both;
 }
