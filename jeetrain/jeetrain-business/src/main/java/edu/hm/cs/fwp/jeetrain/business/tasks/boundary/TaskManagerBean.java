@@ -23,8 +23,6 @@ import edu.hm.cs.fwp.jeetrain.integration.tasks.TaskRepository;
  * @author theism
  */
 @Stateless
-@Remote(TaskManager.class)
-@LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @RolesAllowed("JEETRAIN_USER")
 public class TaskManagerBean implements TaskManager {

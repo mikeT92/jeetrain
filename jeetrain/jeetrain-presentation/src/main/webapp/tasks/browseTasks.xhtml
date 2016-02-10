@@ -3,14 +3,11 @@
 	browseTasks.xhtml
 	View displaying all available tasks.
  -->
-<f:view xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	<f:metadata>
-		<f:event type="preRenderView"
-			listener="#{taskBrowser.onPreRenderView}" />
+		<f:event type="preRenderView" listener="#{taskBrowser.onPreRenderView}" />
 	</f:metadata>
 	<ui:composition template="/resources/jeetrain/layouts/master.xhtml">
 		<ui:define name="pageTitle">JEETrain: Browse Tasks</ui:define>
@@ -18,11 +15,9 @@
 			<p:panel id="browseTasksPanel" header="Browse Tasks">
 				<h:form id="browseTasksForm">
 					<p:messages />
-					<p:dataTable id="taskList" value="#{taskBrowser.taskModel}"
-						var="current" rows="10" selectionMode="single"
-						rowKey="#{current.id}"
-						selection="#{taskBrowser.taskModel.selectedRow}" lazy="true"
-						paginator="true" paginatorAlwaysVisible="false">
+					<p:dataTable id="taskList" value="#{taskBrowser.taskModel}" var="current" rows="10"
+						selectionMode="single" selection="#{taskBrowser.taskModel.selectedRow}"
+						lazy="true" paginator="true" paginatorAlwaysVisible="false">
 						<p:ajax event="rowSelect" update=":browseTasksForm:taskButtonsGrid" />
 						<p:ajax event="rowUnselect" update=":browseTasksForm:taskButtonsGrid" />
 						<p:column headerText="Task ID">
@@ -50,41 +45,33 @@
 						</p:column>
 					</p:dataTable>
 					<p:outputPanel id="taskButtonsGrid" autoUpdate="false" style="margin: 0.25em 0.25em 0 0">
-						<p:commandButton id="newTask" value="New"
-							action="#{taskBrowser.newTask}" ajax="false" style="margin-right: 0.25em;" />
-						<p:commandButton id="editTask" value="Edit"
-							action="#{taskBrowser.editTask}" ajax="false" style="margin-right: 0.25em;"
-							disabled="#{! taskBrowser.editTaskEnabled}" />
-						<p:commandButton id="viewTask" value="View"
-							action="#{taskBrowser.viewTask}" ajax="false" style="margin-right: 0.25em;"
-							disabled="#{! taskBrowser.viewTaskEnabled}" />
+						<p:commandButton id="newTask" value="New" action="#{taskBrowser.newTask}" ajax="false"
+							style="margin-right: 0.25em;" />
+						<p:commandButton id="editTask" value="Edit" action="#{taskBrowser.editTask}" ajax="false"
+							style="margin-right: 0.25em;" disabled="#{! taskBrowser.editTaskEnabled}" />
+						<p:commandButton id="viewTask" value="View" action="#{taskBrowser.viewTask}" ajax="false"
+							style="margin-right: 0.25em;" disabled="#{! taskBrowser.viewTaskEnabled}" />
 						<p:commandButton id="deleteTask" value="Delete" style="margin-right: 0.25em;"
-							update=":deleteTaskDialog"
-							oncomplete="deleteTaskDialogWidget.show();"
+							update=":deleteTaskDialog" oncomplete="deleteTaskDialogWidget.show();"
 							disabled="#{! taskBrowser.deleteTaskEnabled}" />
 					</p:outputPanel>
-					<div id="viewButtonsGrid" style="padding: 0.25em 0.25em 0.25.em 0.25.em">
-						<p:commandButton id="closeView" value="Close"
-							action="#{taskBrowser.closeView}" ajax="false" style="float:right"/>
-						<div class="clear" />	
+					<div id="viewButtonsGrid" style="padding: 0.25em 0.25em 0.25 .em 0.25 .em">
+						<p:commandButton id="closeView" value="Close" action="#{taskBrowser.closeView}" ajax="false"
+							style="float:right" />
+						<div class="clear" />
 					</div>
 				</h:form>
 			</p:panel>
-			<p:confirmDialog id="deleteTaskDialog"
-				widgetVar="deleteTaskDialogWidget" header="Delete Task"
+			<p:confirmDialog id="deleteTaskDialog" widgetVar="deleteTaskDialogWidget" header="Delete Task"
 				message="Are you sure you want to delete task [#{taskBrowser.taskModel.selectedRow.id}] ?">
 				<h:form id="deleteTaskForm">
 					<h:panelGrid id="confirmationButtonsGrid" columns="10">
-						<p:commandButton id="yes" value="Yes"
-							action="#{taskBrowser.deleteTask}"
+						<p:commandButton id="yes" value="Yes" action="#{taskBrowser.deleteTask}"
 							oncomplete="deleteTaskDialogWidget.close();" />
-						<p:commandButton id="no" value="No"
-							onclick="deleteTaskDialogWidget.close();" />
+						<p:commandButton id="no" value="No" onclick="deleteTaskDialogWidget.close();" />
 					</h:panelGrid>
 				</h:form>
 			</p:confirmDialog>
 		</ui:define>
 	</ui:composition>
 </f:view>
-
-

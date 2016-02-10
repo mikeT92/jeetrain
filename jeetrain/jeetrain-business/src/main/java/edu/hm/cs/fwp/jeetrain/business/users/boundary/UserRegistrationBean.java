@@ -29,8 +29,6 @@ import edu.hm.cs.fwp.jeetrain.integration.GenericRepositoryBean;
  * @since release 1.0 09.01.2011 16:21:50
  */
 @Stateless
-@Remote(UserRegistration.class)
-@LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @Interceptors({ TraceInterceptor.class, MethodValidationInterceptor.class })
 public class UserRegistrationBean implements UserRegistration {

@@ -17,7 +17,7 @@ import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import edu.hm.cs.fwp.jeetrain.business.users.boundary.UserRegistrationBean;
+import edu.hm.cs.fwp.jeetrain.business.users.boundary.UserRegistration;
 import edu.hm.cs.fwp.jeetrain.business.users.entity.Role;
 import edu.hm.cs.fwp.jeetrain.business.users.entity.Roles;
 import edu.hm.cs.fwp.jeetrain.business.users.entity.User;
@@ -43,7 +43,7 @@ public class UserEditorBean implements Serializable {
 	 * registration process.
 	 */
 	@Inject
-	private UserRegistrationBean boundary;
+	private UserRegistration boundary;
 
 	/**
 	 * Unique identifier of the user the editor currently works on. (view

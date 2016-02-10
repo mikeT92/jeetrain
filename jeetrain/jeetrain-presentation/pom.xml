@@ -20,12 +20,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>edu.hm.cs.fwp.jeetrain</groupId>
-			<artifactId>jeetrain-business</artifactId>
-			<version>${project.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 			<scope>provided</scope>

@@ -15,7 +15,7 @@ import org.primefaces.model.LazyDataModel;
 public abstract class SelectableLazyDataTableModel<T> extends LazyDataModel<T> {
 
 	private T selectedRow;
-	
+
 	public void setSelectedRow(T row) {
 		this.selectedRow = row;
 	}

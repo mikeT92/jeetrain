@@ -17,5 +17,4 @@ public interface TaskManager {
 	public Task retrieveTaskById(long taskId);
 
 	public List<Task> retrieveAllTasks();
-
 }

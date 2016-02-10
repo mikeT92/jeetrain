@@ -4,54 +4,36 @@ package edu.hm.cs.fwp.jeetrain.presentation.tasks;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import edu.hm.cs.fwp.jeetrain.business.tasks.boundary.TaskManagerBean;
+import edu.hm.cs.fwp.jeetrain.business.tasks.boundary.TaskManager;
 import edu.hm.cs.fwp.jeetrain.business.tasks.entity.Task;
 import edu.hm.cs.fwp.jeetrain.business.tasks.entity.TaskCategory;
 import edu.hm.cs.fwp.jeetrain.business.tasks.entity.TaskPriority;
 
 /**
- * {@code ManagedBean} that manages the browseTasks view.
+ * {@code Controller} für alle Detail-Views von {@link Task}s.
  * 
  * @author p534184
  * @version %PR% %PRT% %PO%
  * @since release 1.0 31.10.2012 16:23:52
  */
-@SuppressWarnings("serial")
 @Named("taskEditor")
-@ConversationScoped
+@ViewScoped
 public class TaskEditorBean implements Serializable {
 
-	@Inject
-	private Conversation conversation;
+	private static final long serialVersionUID = 3165316930422099800L;
 
 	@Inject
-	private TaskManagerBean facade;
-
-	private boolean owningConversation;
+	private TaskManager boundary;
 
 	private long taskId;
 
 	private Task task;
 
 	// event handlers --------------------------------------------------------
-
-	/**
-	 * Gets called after a new instance has been created and all injectable
-	 * properties are set.
-	 */
-	@PostConstruct
-	public void onPostConstruct() {
-		if (this.conversation.isTransient()) {
-			this.conversation.begin();
-			this.owningConversation = true;
-		}
-	}
 
 	/**
 	 * Gets called whenever the associated view is about to be rendered.
@@ -67,14 +49,11 @@ public class TaskEditorBean implements Serializable {
 	 * </ul>
 	 */
 	public void onPreRenderView() {
-		System.out.println(getClass().getSimpleName()
-				+ "#onPreRenderView: task=[" + this.task + "], taskId=["
-				+ this.taskId + "]");
 		if (this.task == null) {
 			if (this.taskId == 0) {
 				this.task = new Task();
 			} else {
-				this.task = this.facade.retrieveTaskById(this.taskId);
+				this.task = this.boundary.retrieveTaskById(this.taskId);
 			}
 		}
 	}
@@ -115,7 +94,7 @@ public class TaskEditorBean implements Serializable {
 	// actions ---------------------------------------------------------------
 
 	public String newTask() {
-		this.task = this.facade.addTask(this.task);
+		this.task = this.boundary.addTask(this.task);
 		return "viewTask?faces-redirect=true";
 	}
 
@@ -125,9 +104,6 @@ public class TaskEditorBean implements Serializable {
 
 	public String closeView() {
 		this.task = null;
-		if (!this.conversation.isTransient() && this.owningConversation) {
-			this.conversation.end();
-		}
 		return "/tasks/browseTasks?faces-redirect=true";
 	}
 }
