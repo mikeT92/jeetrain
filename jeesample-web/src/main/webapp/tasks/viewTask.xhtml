@@ -6,27 +6,26 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	<f:metadata>
-		<f:event type="preRenderView" listener="#{taskEditorBean.onPreRenderView}" />
+		<f:event type="preRenderView"
+			listener="#{taskEditorBean.onPreRenderView}" />
 		<f:viewParam name="taskId" value="#{taskEditorBean.taskId}" />
 	</f:metadata>
-
-	<html>
-
-<h:head>
-	<title>Task anzeigen</title>
-</h:head>
-<body>
-	<h1>Task anzeigen Task</h1>
-	<h:form id="viewTaskForm">
-		<h:messages id="viewTaskMessages" globalOnly="false" />
-		<h:panelGrid columns="2">
-			<h:outputLabel for="subject" value="Betreff:" />
-			<h:outputText id="subject" value="#{taskEditorBean.task.subject}" />
-			<h:outputLabel for="description" value="Beschreibung:" />
-			<h:outputText id="description" value="#{taskEditorBean.task.description}" />
-		</h:panelGrid>
-		<h:commandButton id="ok" value="OK" action="newTask?faces-redirect=true" />
-	</h:form>
-</body>
-	</html>
+	<ui:composition template="/resources/jeetrain/layouts/master.xhtml">
+		<ui:define name="pageTitle">JEE Sample: Neuer Task</ui:define>
+		<ui:define name="content">
+			<h1>Task anzeigen Task</h1>
+			<h:form id="viewTaskForm">
+				<h:messages id="viewTaskMessages" globalOnly="false" />
+				<h:panelGrid columns="2">
+					<h:outputLabel for="subject" value="Betreff:" />
+					<h:outputText id="subject" value="#{taskEditorBean.task.subject}" />
+					<h:outputLabel for="description" value="Beschreibung:" />
+					<h:outputText id="description"
+						value="#{taskEditorBean.task.description}" />
+				</h:panelGrid>
+				<h:commandButton id="ok" value="OK"
+					action="newTask?faces-redirect=true" />
+			</h:form>
+		</ui:define>
+	</ui:composition>
 </f:view>

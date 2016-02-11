@@ -5,6 +5,9 @@ package edu.hm.cs.fwp.jeesample.business.tasks.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -15,6 +18,8 @@ import javax.validation.constraints.Size;
  * @version %PR% %PRT% %PO%
  * @since release 1.0 29.10.2012 17:27:22
  */
+@Entity
+@Table(name = "TG29001")
 public class Task implements Serializable {
 
 	private static final long serialVersionUID = 6549807945660625663L;
@@ -29,6 +34,7 @@ public class Task implements Serializable {
 	 */
 	@NotNull
 	@Size(max = 80)
+	
 	private String subject;
 
 	/**
@@ -54,6 +60,7 @@ public class Task implements Serializable {
 	 * Status of this task.
 	 */
 	@NotNull
+	@Column(name="LIFE_CYCLE_STATE")
 	private TaskLifeCycleState lifeCycleState = TaskLifeCycleState.UNDEFINED;
 
 	/**

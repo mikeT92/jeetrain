@@ -6,26 +6,32 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	<f:metadata>
-		<f:event type="preRenderView" listener="#{taskEditorBean.onPreRenderView}" />
+		<f:event type="preRenderView"
+			listener="#{taskEditorBean.onPreRenderView}" />
 	</f:metadata>
-
-	<html>
-
-<h:head>
-	<title>Neuer Task</title>
-</h:head>
-<body>
-	<h1>Neuer Task</h1>
-	<h:form id="newTaskForm">
-		<h:messages id="newTaskMessages" globalOnly="false" />
-		<h:panelGrid columns="2">
-			<h:outputLabel for="subject" value="Betreff:" />
-			<h:inputText id="subject" value="#{taskEditorBean.task.subject}" validatorMessage="Bitte geben Sie einen Betreff ein!" />
-			<h:outputLabel for="description" value="Beschreibung:" />
-			<h:inputTextarea id="description" value="#{taskEditorBean.task.description}" validatorMessage="Bitte geben Sie eine Beschreibung ein!" />
-		</h:panelGrid>
-		<h:commandButton id="ok" value="OK" action="#{taskEditorBean.addTask}" />
-	</h:form>
-</body>
-	</html>
+	<ui:composition template="/resources/jeetrain/layouts/master.xhtml">
+		<ui:define name="pageTitle">#{l10n['jeesample.newTask.pageTitle']}</ui:define>
+		<ui:define name="content">
+			<p:panel id="newTaksPanel" header="Neuer Task">
+				<h:form id="newTaskForm">
+					<p:growl id="newTaskMessages" globalOnly="false" showDetail="true" />
+					<h:panelGrid columns="2">
+						<p:outputLabel for="subject" value="Betreff:" />
+						<p:inputText id="subject" value="#{taskEditorBean.task.subject}"
+							validatorMessage="Bitte geben Sie einen Betreff ein!" />
+						<p:outputLabel for="description" value="Beschreibung:" />
+						<p:inputTextarea id="description"
+							value="#{taskEditorBean.task.description}"
+							validatorMessage="Bitte geben Sie eine Beschreibung ein!" />
+						<p:outputLabel for="submissionDate" value="Eingereicht am:" />
+						<p:calendar id="submissionDate"
+							value="#{taskEditorBean.task.submissionDate}"
+							validatorMessage="Bitte geben Sie eine Datum ein!" locale="en" />
+					</h:panelGrid>
+					<p:commandButton id="ok" value="OK"
+						action="#{taskEditorBean.addTask}" ajax="false" />
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:composition>
 </f:view>
