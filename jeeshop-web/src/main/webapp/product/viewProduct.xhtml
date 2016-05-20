@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:p="http://primefaces.org/ui" template="/resources/jeeshop/layouts/master.xhtml">
+	<f:metadata>
+		<f:event listener="#{productEditorBean.onPreRenderView}" type="preRenderView" />
+		<f:viewParam name="productId" value="#{productEditorBean.productId}"/>
+	</f:metadata>
+	<ui:define name="pageTitle">JEEShop Produktpflege</ui:define>
+	<ui:define name="content">
+		<h1>JEEShop Produkt anzeigen</h1>
+		<h:form id="viewProductForm" >
+			<p:growl globalOnly="false" showDetail="false" />
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Produkt-ID" for="productId"/>
+				<p:inputText id="productId" value="#{productEditorBean.product.id}" readonly="true"/>
+				<p:outputLabel value="Name" for="productName"/>
+				<p:inputText id="productName" value="#{productEditorBean.product.name}" readonly="true"/>
+				<p:outputLabel value="Beschreibung" for="beschreibung"/>
+				<p:inputTextarea id="beschreibung" value="#{productEditorBean.product.beschreibung}" readonly="true"/>
+				<p:outputLabel value="Größe" for="groesse"/>
+				<p:inputText id="groesse" value="#{productEditorBean.product.groesse}" readonly="true"/>
+				<p:outputLabel value="Preis" for="preis"/>
+				<p:inputText id="preis" value="#{productEditorBean.product.preis}" readonly="true" />
+			</h:panelGrid>
+			<p:commandButton id="closeProduct" value="OK" action="#{productEditorBean.closeProduct}" ajax="false" />
+		</h:form>
+	</ui:define>
+</ui:composition>
