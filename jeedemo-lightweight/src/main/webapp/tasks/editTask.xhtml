@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" >
+<f:metadata>
+	<f:viewParam name="taskId" value="#{taskEditor.taskId}" />
+	<f:viewAction action="#{taskEditor.beforeRenderView}" />
+</f:metadata>	
+<h:head>
+	<title><h:outputText value="Edit Task" /></title>
+</h:head>
+<h:body>
+	<h1>Edit Task</h1>
+	<h:form id="editTaskForm" >
+		<div>
+			<p:messages id="messages" globalOnly="false" showDetail="false" />
+		</div>
+		<div>
+			<h:panelGrid id="taskProperties" columns="2">
+				<p:outputLabel for="taskId" value="Task ID:"/>
+				<h:outputText id="taskId" value="#{taskEditor.task.id}" />
+				<p:outputLabel for="subject" value="Subject:"/>
+				<p:inputText id="subject" value="#{taskEditor.task.subject}" validatorMessage="Please enter a subject"/>
+				<p:outputLabel for="description" value="Description:"/>
+				<p:inputText id="description" value="#{taskEditor.task.description}" validatorMessage="Please enter a valid description"/>
+				<p:outputLabel for="category" value="Category:"/>
+				<h:selectOneMenu id="category" value="#{taskEditor.task.category}" validatorMesasge="Please select one category" >
+					<f:selectItems value="#{taskEditor.availableCategories}" />
+				</h:selectOneMenu>
+				<p:outputLabel for="submitterId" value="Submitter:"/>
+				<p:inputText id="submitterId" value="#{taskEditor.task.submitterUserId}"/>
+				<p:outputLabel for="dueDate" value="Due date:"/>
+				<p:inputText id="dueDate" value="#{taskEditor.task.dueDate}"/>
+				<p:outputLabel for="version" value="Version:"/>
+				<h:outputText id="version" value="#{taskEditor.task.version}" />
+			</h:panelGrid>
+		</div>
+		<div>
+		<h:commandButton id="ok" value="OK" action="#{taskEditor.saveTask}" />
+		</div>
+	</h:form>
+</h:body>
+</html>

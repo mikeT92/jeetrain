@@ -13,8 +13,8 @@
 		<dependencies>
 			<dependency>
 				<groupId>edu.hm.cs.fwp.bom</groupId>
-				<artifactId>jee7-glassfish4-bom</artifactId>
-				<version>0.7.5</version>
+				<artifactId>jee7-payara4-bom</artifactId>
+				<version>1.0.0</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
