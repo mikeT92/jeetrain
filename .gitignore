@@ -37,6 +37,7 @@ hs_err_pid*
 .apt_generated/
 .deployables
 .factorypath
+bin/
 
 # MAVEN build artifacts
 target/
